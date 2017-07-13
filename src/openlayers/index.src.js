@@ -98,7 +98,7 @@ angular.module('farmbuild.webmapping')
                     'EPSG:4283', _googleProjection));
                 view.setZoom(defaults.zoomNew);
             } else {
-                view.fitExtent(extent, map.getSize());
+	            view.fit(extent, map.getSize());
             }
             addControlsToOlMap(map, extent);
         }

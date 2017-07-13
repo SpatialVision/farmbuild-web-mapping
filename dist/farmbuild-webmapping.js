@@ -821,7 +821,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             view.setCenter(ol.proj.transform([ defaults.centerNew[1], defaults.centerNew[0] ], "EPSG:4283", _googleProjection));
             view.setZoom(defaults.zoomNew);
         } else {
-            view.fitExtent(extent, map.getSize());
+            view.fit(extent, map.getSize());
         }
         addControlsToOlMap(map, extent);
     }
