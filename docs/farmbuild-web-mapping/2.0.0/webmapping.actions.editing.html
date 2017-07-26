@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>printer - Documentation</title>
+    <title>editing - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">printer</h1>
+    <h1 class="page-title">editing</h1>
     
 
     
@@ -41,9 +41,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
+            <span class="ancestors"><a href="webmapping.html">webmapping</a><a href="webmapping.actions.html">.actions</a>.</span>
         
-        printer
+        editing
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping printer</p></div>
+            <div class="description"><p>Editing namespace of webmapping.actions</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line229">line 229</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line451">line 451</a>
     </li></ul></dd>
     
 
@@ -124,14 +124,14 @@
 
     
 
-    <h4 class="name" id=".baseLayers"><span class="type-signature">(static) </span>baseLayers<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id=".enable"><span class="type-signature">(static) </span>enable<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Reference values for print base layers (ie: 'GOOGLE_SATELLITE', 'GOOGLE_STREET', 'VICMAP_SATELLITE', 'VICMAP_STREET)</p>
+    <p>Enables webmapping edit mode</p>
 </div>
 
 
@@ -175,7 +175,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line249">line 249</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line458">line 458</a>
     </li></ul></dd>
     
 
@@ -198,28 +198,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Supported base layers for print</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -228,14 +206,14 @@
 
     
 
-    <h4 class="name" id=".print"><span class="type-signature">(static) </span>print<span class="signature">(farmdata<span class="signature-attributes">non-null</span>, extent<span class="signature-attributes">non-null</span>, baseMap<span class="signature-attributes">non-null</span>, title<span class="signature-attributes">non-null</span>, showPaddocksLabel<span class="signature-attributes">non-null</span>, includePaddocksTable<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {extent}</span></h4>
+    <h4 class="name" id=".isEditing"><span class="type-signature">(static) </span>isEditing<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Make a request for map print .</p>
+    <p>Whether editng is in progress</p>
 </div>
 
 
@@ -244,170 +222,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>farmdata</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>farmdata which includes farm and paddocks information</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extent</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.Extent</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>extent of the map to be printed</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>baseMap</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">baseMap</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>base map identifier (ie: 'GOOGLE_SATELLITE', 'VICMAP_SATELLITE'). <br/> Use &quot;webmapping.printer.baseLayers&quot; for reference values!</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>report title</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>showPaddocksLabel</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>indicates whether to show paddock labels on the map</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>includePaddocksTable</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>indicates whether to print paddocks information in a tabular format</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -443,7 +257,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line236">line 236</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line464">line 464</a>
     </li></ul></dd>
     
 
@@ -470,7 +284,7 @@
 
         
 <div class="param-desc">
-    <p>a url that you can download you printed map from</p>
+    <p>is editing is in progress</p>
 </div>
 
 
@@ -481,7 +295,7 @@
     </dt>
     <dd>
         
-<span class="param-type">extent</span>
+<span class="param-type">boolean</span>
 
 
     </dd>
@@ -509,7 +323,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.1</a> on Thu Jul 13 2017 17:00:57 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 16:16:22 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

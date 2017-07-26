@@ -1065,7 +1065,7 @@
                                     break;
                                 }
                             },
-                            rules: [ /^(?:\s+)/, /^(?:(-?([0-9]|[1-9][0-9]+))(\.[0-9]+)?([eE][-+]?[0-9]+)?\b)/, /^(?:"(?:\\[\\"bfnrt\/]|\\u[a-fA-F0-9]{4}|[^\\\0-\x09\x0a-\x1f"])*")/, /^(?:\{)/, /^(?:\})/, /^(?:\[)/, /^(?:\])/, /^(?:,)/, /^(?::)/, /^(?:true\b)/, /^(?:false\b)/, /^(?:null\b)/, /^(?:$)/, /^(?:.)/ ],
+                            rules: [ /^(?:\s+)/, /^(?:(-?([0-9]|[1-9][0-9]+))(\.[0-9]+)?([eE][-+]?[0-9]+)?\b)/, /^(?:"(?:\\[\\"bfnrt/]|\\u[a-fA-F0-9]{4}|[^\\\0-\x09\x0a-\x1f"])*")/, /^(?:\{)/, /^(?:\})/, /^(?:\[)/, /^(?:\])/, /^(?:,)/, /^(?::)/, /^(?:true\b)/, /^(?:false\b)/, /^(?:null\b)/, /^(?:$)/, /^(?:.)/ ],
                             conditions: {
                                 INITIAL: {
                                     rules: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ],
@@ -2001,14 +2001,14 @@ angular.module("farmbuild.farmdata").factory("farmdataPaddocks", function($log, 
         return "Paddock " + new Date().getTime() + randomInt(1, 1e3);
     }
     function generateId() {
-        return new Date().getTime();
+        return uuid.v4();
     }
     function createPaddockFeature(geoJsonGeometry) {
         return farmdataConverter.createFeature(geoJsonGeometry, createName());
     }
     farmdataPaddocks.createPaddockFeature = createPaddockFeature;
     function createPaddock(paddockFeature, paddocksExisting, paddocksMerged) {
-        var name = paddockFeature.properties.name, id = paddockFeature.properties._id;
+        var name = paddockFeature.properties.name, id = paddockFeature.properties.id;
         name = _isDefined(name) ? name : createName();
         id = _isDefined(id) ? id : generateId();
         if (!farmdataPaddockValidator.validateFeature(paddockFeature, paddocksExisting) || !farmdataPaddockValidator.validateFeature(paddockFeature, paddocksMerged)) {
@@ -2017,7 +2017,7 @@ angular.module("farmbuild.farmdata").factory("farmdataPaddocks", function($log, 
         }
         return {
             name: name,
-            _id: id,
+            id: id,
             comment: paddockFeature.properties.comment,
             type: paddockFeature.properties.type,
             area: paddockFeature.properties.area,
