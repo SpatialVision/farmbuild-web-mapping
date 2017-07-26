@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>parcels - Documentation</title>
+    <title>paddocks - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">parcels</h1>
+    <h1 class="page-title">paddocks</h1>
     
 
     
@@ -43,7 +43,7 @@
         <h2>
             <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
         
-        parcels
+        paddocks
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping rural parcels</p></div>
+            <div class="description"><p>webmapping paddock</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="parcels_index.src.js.html">parcels/index.src.js</a>, <a href="parcels_index.src.js.html#line10">line 10</a>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -124,15 +124,14 @@
 
     
 
-    <h4 class="name" id=".load"><span class="type-signature">(static) </span>load<span class="signature">(serviceUrl<span class="signature-attributes">non-null</span>, extent<span class="signature-attributes">non-null</span>, extentDataProjection<span class="signature-attributes">non-null</span>, responseProjection<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+    <h4 class="name" id=".findByCoordinate"><span class="type-signature">(static) </span>findByCoordinate<span class="signature">(coordinate<span class="signature-attributes">non-null</span>, vectorLayer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {ol.Feature}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>loads rural parcels and add it as layer to ol.Map.
-This method uses JsonP to get information, make sure the projection definition matches your extent data, otherwise you will not get any data.</p>
+    <p>finds a paddock based on the coordinate</p>
 </div>
 
 
@@ -168,13 +167,13 @@ This method uses JsonP to get information, make sure the projection definition m
 
         <tr>
             
-                <td class="name"><code>serviceUrl</code></td>
+                <td class="name"><code>coordinate</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">ol.Coordinate</span>
 
 
             
@@ -184,20 +183,20 @@ This method uses JsonP to get information, make sure the projection definition m
 
             
 
-            <td class="description last"><p>url of wfs parcels service to get data from</p></td>
+            <td class="description last"><p>openlayers map object</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>extent</code></td>
+                <td class="name"><code>vectorLayer</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">ol.Extent</span>
+<span class="param-type">ol.layer.Vector</span>
 
 
             
@@ -207,53 +206,7 @@ This method uses JsonP to get information, make sure the projection definition m
 
             
 
-            <td class="description last"><p>extent of area to query for parcels</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>extentDataProjection</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>data projection of extent data</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>responseProjection</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>desired data projection of the response</p></td>
+            <td class="description last"><p>paddock layer</p></td>
         </tr>
 
     
@@ -294,7 +247,7 @@ This method uses JsonP to get information, make sure the projection definition m
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="parcels_index.src.js.html">parcels/index.src.js</a>, <a href="parcels_index.src.js.html#line21">line 21</a>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -321,7 +274,7 @@ This method uses JsonP to get information, make sure the projection definition m
 
         
 <div class="param-desc">
-    <p>a promise object that represents http request made to get parcels</p>
+    <p>the first paddock found in that coordinate</p>
 </div>
 
 
@@ -332,7 +285,7 @@ This method uses JsonP to get information, make sure the projection definition m
     </dt>
     <dd>
         
-<span class="param-type">object</span>
+<span class="param-type">ol.Feature</span>
 
 
     </dd>
@@ -360,7 +313,7 @@ This method uses JsonP to get information, make sure the projection definition m
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 16:16:22 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 26 2017 17:34:45 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

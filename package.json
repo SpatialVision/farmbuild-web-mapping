@@ -1,7 +1,7 @@
 {
   "name": "farmbuild-web-mapping",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "This project is the web mapping module of farm build JavaScript library",
   "repository": "https://github.com/FarmBuild/farmbuild-web-mapping",
   "dependencies": {
