@@ -40,6 +40,35 @@ angular.module('farmbuild.webmapping')
 
 		return {
 			findByCoordinate: _findByCoordinate,
+			/**
+			 * Find paddock by name
+			 * @method findByName
+			 * @param {!string} name - name of the paddock to search for
+			 * @param {!Array} paddocks - paddocks array to search on
+			 * @returns {!object} paddock Object
+			 * @public
+			 * @memberof webmapping.paddocks
+			 */
+			findByName: farmdata.paddocks.byName,
+			/**
+			 * Find paddock by id
+			 * @method findById
+			 * @param {!string} id - id of the paddock to search for
+			 * @param {!Array} paddocks - paddocks array to search on
+			 * @returns {!object} paddock Object
+			 * @public
+			 * @memberof webmapping.paddocks
+			 */
+			findById: farmdata.paddocks.byId,
+			/**
+			 * Returns GeoJSON for a given paddock
+			 * @method toGeoJSON
+			 * @param {!object} paddock - paddock object
+			 * @returns {object} Paddock Feature Object
+			 * @public
+			 * @memberof webmapping.paddocks
+			 */
+			toGeoJSON: farmdata.paddocks.toGeoJSON,
 
 			/**
 			 * webmapping paddocks/types

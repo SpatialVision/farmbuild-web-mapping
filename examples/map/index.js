@@ -180,7 +180,8 @@ angular.module('farmbuild.webmapping.examples', ['farmbuild.webmapping'])
 				name: sp.name,
 				comment: sp.comment,
 				area: sp.area,
-				group: sp.group
+				group: sp.group,
+				registered: false
 			});
 			paddockChanged();
 		};

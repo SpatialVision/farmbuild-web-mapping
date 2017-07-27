@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>interactions/index.src.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="webmapping.html">webmapping</a><ul class='methods'><li data-type='method'><a href="webmapping.html#.create">create</a></li><li data-type='method'><a href="webmapping.html#.export">export</a></li><li data-type='method'><a href="webmapping.html#.exportGeoJson">exportGeoJson</a></li><li data-type='method'><a href="webmapping.html#.exportKml">exportKml</a></li><li data-type='method'><a href="webmapping.html#.find">find</a></li><li data-type='method'><a href="webmapping.html#.load">load</a></li><li data-type='method'><a href="webmapping.html#.on">on</a></li><li data-type='method'><a href="webmapping.html#.print">print</a></li><li data-type='method'><a href="webmapping.html#.save">save</a></li><li data-type='method'><a href="webmapping.html#.toGeoJson">toGeoJson</a></li><li data-type='method'><a href="webmapping.html#.toKml">toKml</a></li><li data-type='method'><a href="webmapping.html#.update">update</a></li></ul></li><li><a href="webmapping.actions.html">actions</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.html#.destroy">destroy</a></li><li data-type='method'><a href="webmapping.actions.html#.init">init</a></li></ul></li><li><a href="webmapping.actions.donut.html">donut</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.donut.html#.enable">enable</a></li></ul></li><li><a href="webmapping.actions.drawing.html">drawing</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.drawing.html#.discard">discard</a></li><li data-type='method'><a href="webmapping.actions.drawing.html#.enable">enable</a></li><li data-type='method'><a href="webmapping.actions.drawing.html#.finish">finish</a></li><li data-type='method'><a href="webmapping.actions.drawing.html#.isDrawing">isDrawing</a></li></ul></li><li><a href="webmapping.actions.editing.html">editing</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.editing.html#.enable">enable</a></li><li data-type='method'><a href="webmapping.actions.editing.html#.isEditing">isEditing</a></li></ul></li><li><a href="webmapping.actions.features.html">features</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.features.html#.clip">clip</a></li><li data-type='method'><a href="webmapping.actions.features.html#.remove">remove</a></li><li data-type='method'><a href="webmapping.actions.features.html#.selections">selections</a></li></ul></li><li><a href="webmapping.actions.snapping.html">snapping</a><ul class='methods'><li data-type='method'><a href="webmapping.actions.snapping.html#.active">active</a></li><li data-type='method'><a href="webmapping.actions.snapping.html#.disable">disable</a></li><li data-type='method'><a href="webmapping.actions.snapping.html#.enable">enable</a></li></ul></li><li><a href="webmapping.events.html">events</a><ul class='methods'><li data-type='method'><a href="webmapping.events.html#.web-mapping-base-layer-change">web-mapping-base-layer-change</a></li><li data-type='method'><a href="webmapping.events.html#.web-mapping-donut-draw-end">web-mapping-donut-draw-end</a></li><li data-type='method'><a href="webmapping.events.html#.web-mapping-draw-end">web-mapping-draw-end</a></li><li data-type='method'><a href="webmapping.events.html#.web-mapping-feature-deselect">web-mapping-feature-deselect</a></li><li data-type='method'><a href="webmapping.events.html#.web-mapping-feature-select">web-mapping-feature-select</a></li><li data-type='method'><a href="webmapping.events.html#.web-mapping-measure-end">web-mapping-measure-end</a></li></ul></li><li><a href="webmapping.ga.html">ga</a><ul class='methods'><li data-type='method'><a href="webmapping.ga.html#.trackWebMapping">trackWebMapping</a></li></ul></li><li><a href="webmapping.measurement.html">measurement</a><ul class='methods'><li data-type='method'><a href="webmapping.measurement.html#.area">area</a></li><li data-type='method'><a href="webmapping.measurement.html#.length">length</a></li></ul></li><li><a href="webmapping.olHelper.html">olHelper</a><ul class='methods'><li data-type='method'><a href="webmapping.olHelper.html#.center">center</a></li><li data-type='method'><a href="webmapping.olHelper.html#.createBaseLayers">createBaseLayers</a></li><li data-type='method'><a href="webmapping.olHelper.html#.createBaseLayersWithGoogleMaps">createBaseLayersWithGoogleMaps</a></li><li data-type='method'><a href="webmapping.olHelper.html#.createFarmLayers">createFarmLayers</a></li><li data-type='method'><a href="webmapping.olHelper.html#.exportGeometry">exportGeometry</a></li><li data-type='method'><a href="webmapping.olHelper.html#.farmLayer">farmLayer</a></li><li data-type='method'><a href="webmapping.olHelper.html#.farmLayerGroup">farmLayerGroup</a></li><li data-type='method'><a href="webmapping.olHelper.html#.init">init</a></li><li data-type='method'><a href="webmapping.olHelper.html#.initGoogleAddressSearch">initGoogleAddressSearch</a></li><li data-type='method'><a href="webmapping.olHelper.html#.initWithGoogleMap">initWithGoogleMap</a></li><li data-type='method'><a href="webmapping.olHelper.html#.paddocksLayer">paddocksLayer</a></li><li data-type='method'><a href="webmapping.olHelper.html#.reload">reload</a></li><li data-type='method'><a href="webmapping.olHelper.html#.updateExtent">updateExtent</a></li></ul></li><li><a href="webmapping.paddocks.html">paddocks</a><ul class='methods'><li data-type='method'><a href="webmapping.paddocks.html#.findByCoordinate">findByCoordinate</a></li><li data-type='method'><a href="webmapping.paddocks.html#.findById">findById</a></li><li data-type='method'><a href="webmapping.paddocks.html#.findByName">findByName</a></li><li data-type='method'><a href="webmapping.paddocks.html#.toGeoJSON">toGeoJSON</a></li></ul></li><li><a href="webmapping.paddocks_groups.html">paddocks/groups</a><ul class='methods'><li data-type='method'><a href="webmapping.paddocks_groups.html#.add">add</a></li><li data-type='method'><a href="webmapping.paddocks_groups.html#.at">at</a></li><li data-type='method'><a href="webmapping.paddocks_groups.html#.load">load</a></li><li data-type='method'><a href="webmapping.paddocks_groups.html#.removeAt">removeAt</a></li><li data-type='method'><a href="webmapping.paddocks_groups.html#.toArray">toArray</a></li></ul></li><li><a href="webmapping.paddocks_types.html">paddocks/types</a><ul class='methods'><li data-type='method'><a href="webmapping.paddocks_types.html#.add">add</a></li><li data-type='method'><a href="webmapping.paddocks_types.html#.at">at</a></li><li data-type='method'><a href="webmapping.paddocks_types.html#.load">load</a></li><li data-type='method'><a href="webmapping.paddocks_types.html#.removeAt">removeAt</a></li><li data-type='method'><a href="webmapping.paddocks_types.html#.toArray">toArray</a></li></ul></li><li><a href="webmapping.parcels.html">parcels</a><ul class='methods'><li data-type='method'><a href="webmapping.parcels.html#.load">load</a></li></ul></li><li><a href="webmapping.printer.html">printer</a><ul class='methods'><li data-type='method'><a href="webmapping.printer.html#.baseLayers">baseLayers</a></li><li data-type='method'><a href="webmapping.printer.html#.print">print</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">interactions/index.src.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @since 0.0.1
+ * @copyright 2015 State of Victoria.
+
+ * @author State of Victoria
+ * @version 1.0.0
+ */
+
+'use strict';
+
+/**
+ * webmapping actions namespace
+ * @memberof webmapping
+ * @type {object}
+ * @namespace webmapping.actions
+ */
+
+angular.module('farmbuild.webmapping')
+	.factory('webMappingInteractions',
+	function (validations,
+	          $log,
+	          webMappingSelectInteraction,
+	          webMappingModifyInteraction,
+	          webMappingDrawInteraction,
+	          webMappingSnapInteraction,
+	          webMappingGeoProcessing,
+	          $rootScope) {
+		var _isDefined = validations.isDefined,
+			_select, _modify, _draw, _snap, _activeLayer, _activeLayerName,
+			_mode,
+			_farmLayerGroup, _farmLayer, _paddocksLayer, _map,
+			_transform = webMappingGeoProcessing,
+			_farmName,
+			_donutContainer;
+
+		/**
+		 * Remove all the webmapping interactions, this only remove the interactions which is added by webmapping to ol.Map
+		 * @memberof webmapping.actions
+		 * @param {!ol.Map} map - openlayers map object
+		 * @method destroy
+		 */
+		function _destroy(map) {
+			$log.info('destroying all interactions ...');
+			if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_snap) || !_isDefined(_draw)) {
+				return;
+			}
+			map.removeInteraction(_select.interaction);
+			map.removeInteraction(_modify.interaction);
+			map.removeInteraction(_draw.interaction);
+			_snap.destroy(map);
+
+			_select = undefined;
+			_modify = undefined;
+			_draw = undefined;
+			_snap = undefined;
+			_activeLayer = undefined;
+			_activeLayerName = undefined;
+			_mode = undefined;
+		};
+
+		/**
+		 * Initialise mapping actions
+		 * @memberof webmapping.actions
+		 * @method init
+		 * @param {!ol.Map} map - openlayers map object
+		 * @param {!ol.layer.Group} farmLayerGroup - farm LayerGroup, use olHelper class to get this object
+		 * @param {!String} activeLayerName - can be "paddocks" or "farm", the layer which you want to interact with
+		 * @param {Boolean} snappingDefaultStatus - whether to activate snapping, snapping is used between farm, paddocks and rural parcels
+		 * @param {Boolean} initKeyboardInteraction - whether to activate keyboard interaction
+		 */
+		function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction) {
+
+			$log.info('interactions init ...');
+			if (!_isDefined(activeLayerName) || !_isDefined(map) || !_isDefined(farmLayerGroup)) {
+				return;
+			}
+
+			_farmLayerGroup = farmLayerGroup;
+			_farmLayer = farmLayerGroup.getLayers().item(1);
+			_paddocksLayer = farmLayerGroup.getLayers().item(0);
+			_map = map;
+
+			if (activeLayerName === 'paddocks') {
+				_activeLayer = _paddocksLayer;
+
+			} else if (activeLayerName === 'farm') {
+				_activeLayer = _farmLayer;
+				_farmName = _activeLayer.getSource().getFeatures()[0].getProperties().name;
+			} else {
+				return;
+			}
+
+			_select = webMappingSelectInteraction.create(map, _activeLayer);
+			_modify = webMappingModifyInteraction.create(map, _select);
+			_draw = webMappingDrawInteraction.create(map, farmLayerGroup);
+			_snap = webMappingSnapInteraction.create(map, _farmLayer.getSource(), _paddocksLayer.getSource());
+			_mode = '';
+			_activeLayerName = activeLayerName;
+
+			_select.init();
+			_modify.init();
+			_draw.init();
+			_snap.init(snappingDefaultStatus);
+
+			if (initKeyboardInteraction) {
+				_enableKeyboardShortcuts();
+			}
+
+		};
+
+		function _addFeature(layer, feature, newProperties) {
+			var properties = newProperties || {};
+			if (!_isDefined(feature)) {
+				return;
+			}
+			if (!_isDefined(properties.name)) {
+				if (_activeLayerName === 'farm') {
+					properties.name = _farmName;
+				} else {
+					properties.name = 'Paddock ' + (new Date()).getTime();
+				}
+			}
+			properties.geometry = feature.getProperties().geometry;
+			feature.setProperties(properties);
+			$log.info('adding feature ...', feature);
+			layer.getSource().addFeature(feature);
+			_clearSelections();
+			return feature;
+		};
+
+		/**
+		 * Clips the selected feature, paddcoks are clipped by other paddocks and farm.
+		 * @memberof webmapping.actions.features
+		 * @method remove
+		 * @param {ol.Collection.&lt;ol.Feature>} features feature you want to remove
+		 * @param {Boolean} deselect whether to clear selections after they are removed
+		 */
+		function _remove(features, deselect) {
+			if (!_isDefined(features) || !_isDefined(_activeLayer)) {
+				return;
+			}
+			if (!_isDefined(deselect)) {
+				deselect = true;
+			}
+			$log.info('removing features ...', features);
+			features.forEach(function (feature) {
+				try {
+					_activeLayer.getSource().removeFeature(feature);
+				} catch (e) {
+					$log.error(e);
+				}
+			});
+			if (deselect) {
+				_clearSelections()
+			}
+		};
+
+		/**
+		 * Clips the selected feature, selected paddock is clipped by other paddocks and farm boundary.
+		 * @memberof webmapping.actions.features
+		 * @method clip
+		 * @param {!ol.Feature} featureToClip feature you want to clip
+		 * @param {!ol.layer.Group} farmLayers the groupLayer of farm, use olHelper class to get this
+		 * @returns {ol.Feature} Clipped feature
+		 */
+		function _clip(featureToClip, farmLayers) {
+			if (!_isDefined(farmLayers) || !_isDefined(farmLayers.getLayers()) || !_isDefined(featureToClip) || !_isDefined(farmLayers.getLayers().item(0)) || !_isDefined(farmLayers.getLayers().item(1))) {
+				return;
+			}
+			$log.info('clipping feature ...', featureToClip);
+			var paddockSource = farmLayers.getLayers().item(0).getSource(),
+				farmSource = farmLayers.getLayers().item(1).getSource();
+
+			if (_activeLayerName === 'paddocks' &amp;&amp; (_mode === 'draw' || _mode === 'edit')) {
+				return _clipPaddocks(featureToClip, paddockSource, farmSource);
+			}
+
+			if (_activeLayerName === 'paddocks' &amp;&amp; _mode === 'donut-draw') {
+				return _clipDonut(featureToClip);
+			}
+
+			if (_activeLayerName === 'farm') {
+				return _clipFarm(featureToClip, farmSource)
+
+			}
+		};
+
+		function _clipPaddocks(featureToClip, paddockSource, farmSource) {
+			var properties = featureToClip.getProperties(),
+				paddocksFeatures, farmFeatures, clipped;
+			if (farmSource.getFeatures()[0].getGeometry().getExtent()[0] === Infinity) {
+				$log.error('please draw farm boundaries before adding paddock');
+				return;
+			}
+			if (_isDefined(properties.name)) {
+				paddockSource.removeFeature(featureToClip);
+			}
+			paddocksFeatures = paddockSource.getFeatures();
+			farmFeatures = farmSource.getFeatures();
+			properties = featureToClip.getProperties();
+			clipped = _transform.eraseAll(featureToClip, paddocksFeatures);
+			clipped = _transform.intersect(clipped, farmFeatures[0]);
+
+			if (clipped &amp;&amp; clipped.getGeometry().getType() === 'GeometryCollection') {
+				var temp = [];
+				clipped.getGeometry().getGeometries().forEach(function (f) {
+					if (f.getType() !== 'LineString' &amp;&amp; f.getType() !== 'Point') {
+						temp.push(new ol.Feature({
+							geometry: new ol.geom.Polygon(f.getCoordinates())
+						}))
+					}
+				});
+				var merged = _transform.merge(temp);
+				merged.setProperties({
+					name: clipped.getProperties().name,
+					_id: clipped.getProperties()._id
+				});
+				clipped = merged;
+			}
+
+			return _addFeature(_activeLayer, clipped, properties);
+		};
+
+		function _clipDonut(donutFeature) {
+			var properties,
+				paddockFeature = _donutContainer,
+				clipped = _transform.erase(paddockFeature, donutFeature);
+			if (!_isDefined(paddockFeature)) {
+				$log.error('donut must be inside a paddock');
+				return;
+			}
+			properties = paddockFeature.getProperties();
+			if (_isDefined(clipped)) {
+				_activeLayer.getSource().removeFeature(paddockFeature);
+				return _addFeature(_activeLayer, clipped, properties);
+			}
+		};
+
+		function _clipFarm(featureToClip, farmSource) {
+			var clipped = featureToClip,
+				properties, result;
+			if (farmSource.getFeatures()[0]) {
+				properties = farmSource.getFeatures()[0].getProperties();
+			}
+			if (farmSource.getFeatures()[0] &amp;&amp; farmSource.getFeatures()[0].getGeometry().getExtent()[0] !== Infinity) {
+				clipped = _transform.erase(featureToClip, farmSource.getFeatures()[0]);
+				_addFeature(_activeLayer, clipped, properties);
+				clipped = _transform.merge(farmSource.getFeatures());
+			}
+			_remove(farmSource.getFeatures(), false);
+			result = _addFeature(_activeLayer, clipped, properties);
+			_clearSelections();
+			return result;
+		};
+
+		function _merge(features) {
+			$log.info('merging features ...', features);
+			_remove(features, false);
+			_addFeature(_activeLayer, _transform.merge(features));
+			_clearSelections();
+		};
+
+		/**
+		 * Selected features by select interaction
+		 * @memberof webmapping.actions.features
+		 * @method selections
+		 * @returns {ol.Collection.&lt;ol.Feature>} Collection of ol.Features, represents selected features
+		 */
+		function _selectedFeatures() {
+			if (!_isDefined(_select) || !_isDefined(_select.interaction)) {
+				return;
+			}
+			$log.info('Selected features ...', _select.interaction.getFeatures());
+			return _select.interaction.getFeatures();
+		};
+
+		function _enableEditing() {
+			if (!_isDefined(_mode) || _mode === 'edit' || _mode === 'measure') {
+				return;
+			}
+			$log.info('editing enabled');
+			_mode = 'edit';
+			_select.enable();
+			_modify.enable();
+			_draw.disable();
+		};
+
+		function _enableDrawing() {
+			if (!_isDefined(_mode) || _mode === 'draw' || _mode === 'measure') {
+				return;
+			}
+			$log.info('drawing enabled');
+			_mode = 'draw';
+			_select.disable();
+			_modify.disable();
+			_draw.enable(_mode);
+		};
+
+		function _enableDonutDrawing() {
+			if (!_isDefined(_mode) || _mode === 'donut-draw') {
+				return;
+			}
+			$log.info('donut drawing enabled');
+			_donutContainer = _selectedFeatures().item(0);
+			_mode = 'donut-draw';
+			_select.disable();
+			_modify.disable();
+			_draw.enable(_mode);
+		};
+
+		function _snapParcels(parcels) {
+			if (!_isDefined(parcels) || !_isDefined(_snap)) {
+				$log.error('Snap interaction is undefined, select a layer to start!');
+				return;
+			}
+			_snap.addFeatures(parcels);
+		};
+
+		function _clearSelections() {
+			_select.interaction.getFeatures().clear();
+		};
+
+		function _isDrawing() {
+			if (!_isDefined(_mode)) {
+				return;
+			}
+			return _draw.isDrawing();
+		};
+
+		function _finishDrawing() {
+			if (!_isDefined(_mode)) {
+				return;
+			}
+			_draw.finish();
+		};
+
+		function _discardDrawing() {
+			if (!_isDefined(_mode)) {
+				return;
+			}
+			_draw.discard();
+			_selectedFeatures().clear();
+		};
+
+		function _isEditing() {
+			if (!_isDefined(_mode)) {
+				return;
+			}
+			return _select.interaction.getFeatures().getLength() > 0;
+		};
+
+		function _disableSnapping() {
+			if (!_isDefined(_snap)) {
+				return;
+			}
+			return _snap.disable();
+		};
+
+		function _isSnappingActive() {
+			if (!_isDefined(_snap)) {
+				return;
+			}
+			return _snap.interaction.getActive();
+		};
+
+		function _enableSnapping() {
+			if (!_isDefined(_snap)) {
+				return;
+			}
+			return _snap.enable();
+		};
+
+		$rootScope.$on('web-mapping-measure-start', function (event, data) {
+			if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
+				return;
+			}
+			_select.disable();
+			_modify.disable();
+			_draw.disable();
+			_mode = 'measure';
+		});
+
+		$rootScope.$on('web-mapping-measure-end', function (event, data) {
+			if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
+				return;
+			}
+			_select.enable();
+			_modify.enable();
+			_draw.disable();
+			_mode = 'edit';
+		});
+
+		$rootScope.$on('web-mapping-draw-end', function (event, feature) {
+			$log.info('draw end ...');
+			_clip(feature, _farmLayerGroup);
+		});
+
+		$rootScope.$on('web-mapping-donut-draw-end', function (event, feature) {
+			$log.info('donut draw end ...');
+			_select.interaction.getFeatures().push(_clip(feature, _farmLayerGroup));
+			_donutContainer = null;
+		});
+
+		function _enableKeyboardShortcuts() {
+			var element = _map.getTargetElement();
+			element.tabIndex = 0;
+
+			function onKeyDown(event) {
+				var selectedFeatures = _selectedFeatures();
+				if (!_isDefined(selectedFeatures)) {
+					return;
+				}
+
+				if (event.keyCode == 46 || event.keyCode == 8) {
+					_remove(selectedFeatures);
+					event.preventDefault();
+					event.stopPropagation();
+					return false;
+				}
+
+				if (event.keyCode == 13) {
+
+					if (_isDrawing()) {
+						_finishDrawing();
+					} else {
+						_clip(_selectedFeatures().item(0), _farmLayerGroup);
+					}
+
+					event.preventDefault();
+					event.stopPropagation();
+					return false;
+				}
+
+				if (event.keyCode == 27) {
+					if (_isDrawing()) {
+						_discardDrawing();
+						event.preventDefault();
+						event.stopPropagation();
+						return false;
+					}
+				}
+			}
+
+			element.addEventListener('keydown', onKeyDown);
+
+		};
+
+		return {
+			init: _init,
+			destroy: _destroy,
+			/**
+			 * Editing namespace of webmapping.actions
+			 * @memberof webmapping.actions
+			 * @type {object}
+			 * @namespace webmapping.actions.editing
+			 */
+			editing: {
+				/**
+				 * Enables webmapping edit mode
+				 * @memberof webmapping.actions.editing
+				 * @method enable
+				 */
+				enable: _enableEditing,
+				/**
+				 * Whether editng is in progress
+				 * @memberof webmapping.actions.editing
+				 * @method isEditing
+				 * @returns {boolean} is editing is in progress
+				 */
+				isEditing: _isEditing
+			},
+			/**
+			 * Drawing namespace of webmapping.actions
+			 * @memberof webmapping.actions
+			 * @type {object}
+			 * @namespace webmapping.actions.drawing
+			 */
+			drawing: {
+				/**
+				 * Discard drawing if it is in progress
+				 * @memberof webmapping.actions.drawing
+				 * @method discard
+				 */
+				discard: _discardDrawing,
+				/**
+				 * Finish drawing if it is in progress, this require drawing at least to have two point to draw a polygon
+				 * @memberof webmapping.actions.drawing
+				 * @method finish
+				 */
+				finish: _finishDrawing,
+				/**
+				 * Enables webmapping draw mode
+				 * @memberof webmapping.actions.drawing
+				 * @method enable
+				 */
+				enable: _enableDrawing,
+				/**
+				 * Whether drawing is in progress
+				 * @memberof webmapping.actions.drawing
+				 * @method isDrawing
+				 * @returns {boolean} is drawing is in progress
+				 */
+				isDrawing: _isDrawing
+			},
+			/**
+			 * Donut Drawing namespace of webmapping.actions
+			 * @memberof webmapping.actions
+			 * @type {object}
+			 * @namespace webmapping.actions.donut
+			 */
+			donut: {
+				/**
+				 * Enables webmapping donut draw mode
+				 * @memberof webmapping.actions.donut
+				 * @method enable
+				 */
+				enable: _enableDonutDrawing
+			},
+			/**
+			 * Snapping namespace of webmapping.actions
+			 * @memberof webmapping.actions
+			 * @type {object}
+			 * @namespace webmapping.actions.snapping
+			 */
+			snapping: {
+				/**
+				 * Enables webmapping snap interaction
+				 * @memberof webmapping.actions.snapping
+				 * @method enable
+				 */
+				enable: _enableSnapping,
+				/**
+				 * Disable webmapping snap interaction
+				 * @memberof webmapping.actions.snapping
+				 * @method disable
+				 */
+				disable: _disableSnapping,
+				/**
+				 * Is webmapping snap interaction active?
+				 * @memberof webmapping.actions.snapping
+				 * @method active
+				 * @returns {boolean} whether snap interaction is active
+				 */
+				active: _isSnappingActive
+			},
+			/**
+			 * Features namespace of webmapping.actions
+			 * @memberof webmapping.actions
+			 * @type {object}
+			 * @namespace webmapping.actions.features
+			 */
+			features: {
+				selections: _selectedFeatures,
+				clip: _clip,
+				merge: _merge,
+				remove: _remove
+			},
+			parcels: {
+				snap: _snapParcels
+			},
+			keyboardShortcuts: {
+				enable: _enableKeyboardShortcuts
+			}
+		}
+	});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Jul 27 2017 14:46:00 GMT+1000 (AEST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

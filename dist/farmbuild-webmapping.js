@@ -1060,6 +1060,9 @@ angular.module("farmbuild.webmapping").factory("webMappingPaddocks", function($l
     }
     return {
         findByCoordinate: _findByCoordinate,
+        findByName: farmdata.paddocks.byName,
+        findById: farmdata.paddocks.byId,
+        toGeoJSON: farmdata.paddocks.toGeoJSON,
         types: farmdata.paddockTypes,
         groups: farmdata.paddockGroups
     };
