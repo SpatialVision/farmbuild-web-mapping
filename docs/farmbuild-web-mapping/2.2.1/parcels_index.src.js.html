@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>paddocks/index.src.js - Documentation</title>
+    <title>parcels/index.src.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">paddocks/index.src.js</h1>
+    <h1 class="page-title">parcels/index.src.js</h1>
     
 
     
@@ -48,173 +48,67 @@
  */
 
 /**
- * webmapping paddock
+ * webmapping rural parcels
  * @type {object}
- * @namespace webmapping.paddocks
+ * @namespace webmapping.parcels
  */
 angular.module('farmbuild.webmapping')
-	.factory('webMappingPaddocks',
-	function ($log, validations, farmdata) {
-		var _isDefined = validations.isDefined;
+	.factory('webMappingParcels',
+	function ($log, $http, validations, webMappingInteractions, webMappingConverter) {
+		var _isDefined = validations.isDefined,
+			converter = webMappingConverter;
 
 		/**
-		 * finds a paddock based on the coordinate
-		 * @method findByCoordinate
-		 * @param {!ol.Coordinate} coordinate openlayers map object
-		 * @param {!ol.layer.Vector} vectorLayer - paddock layer
-		 * @returns {ol.Feature} the first paddock found in that coordinate
-		 * @memberof webmapping.paddocks
+		 * loads rural parcels and add it as layer to ol.Map.
+		 * This method uses JsonP to get information, make sure the projection definition matches your extent data, otherwise you will not get any data.
+		 * @method load
+		 * @param {!String} serviceUrl url of wfs parcels service to get data from
+		 * @param {!ol.Extent} extent extent of area to query for parcels
+		 * @param {!String} extentDataProjection data projection of extent data
+		 * @param {!String} responseProjection desired data projection of the response
+		 * @returns {!object} a promise object that represents http request made to get parcels
+		 * @memberof webmapping.parcels
 		 */
-		function _findByCoordinate(coordinate, vectorLayer) {
-			var found;
-			if (!_isDefined(coordinate) || !_isDefined(vectorLayer)) {
+		function _load(serviceUrl, extent, extentDataProjection, responseProjection) {
+			//load('http://sv079.sv.domain:8080/geoserver/farmbuild/ows', [16204823.698695935, -4332241.187057228, 16206541.143175218, -4331412.32303176], 'EPSG:3857', 'EPSG:3857');
+			var config = {
+				params: {
+					service: 'WFS',
+					version: '1.0.0',
+					request: 'GetFeature',
+					typeName: 'farmbuild:ruralparcels',
+					outputFormat: 'text/javascript',
+					format_options: 'callback:JSON_CALLBACK',
+					srsname: responseProjection,
+					bbox: extent.join(',') + ',' + extentDataProjection
+				}
+			};
+
+			if (!_isDefined(serviceUrl) || !_isDefined(extent) || !_isDefined(extentDataProjection) || !_isDefined(responseProjection)) {
+				$log.error('There is a problem with input parameters, please refer to api for more information');
 				return;
 			}
-			var paddocks = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate);
-			if (paddocks &amp;&amp; paddocks.length > 0) {
-				found = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate)[0];
-			}
-			$log.info('looking up for a paddock at ', coordinate, found);
-			return found;
+			$log.info('Loading parcels information for the extent: ', extent);
+			return $http({method: 'JSONP', url: serviceUrl, params: config.params}).
+				success(function (data, status) {
+					$log.info('loaded parcels successfully.', status, data);
+					var olFeatures = converter.geoJsonToFeatures({
+						"type": "FeatureCollection",
+						"features": data.features
+					});
+					webMappingInteractions.parcels.snap(olFeatures);
+				})
+				.error(function (data, status) {
+					$log.error('loading parcels failed!!', status, data);
+				});
 		}
 
 		return {
-			findByCoordinate: _findByCoordinate,
-			/**
-			 * Find paddock by name
-			 * @method findByName
-			 * @param {!string} name - name of the paddock to search for
-			 * @param {!Array} paddocks - paddocks array to search on
-			 * @returns {!object} paddock Object
-			 * @public
-			 * @memberof webmapping.paddocks
-			 */
-			findByName: farmdata.paddocks.byName,
-			/**
-			 * Find paddock by id
-			 * @method findById
-			 * @param {!string} id - id of the paddock to search for
-			 * @param {!Array} paddocks - paddocks array to search on
-			 * @returns {!object} paddock Object
-			 * @public
-			 * @memberof webmapping.paddocks
-			 */
-			findById: farmdata.paddocks.byId,
-			/**
-			 * Returns GeoJSON for a given paddock
-			 * @method toGeoJSON
-			 * @param {!object} paddock - paddock object
-			 * @returns {object} Paddock Feature Object
-			 * @public
-			 * @memberof webmapping.paddocks
-			 */
-			toGeoJSON: farmdata.paddocks.toGeoJSON,
-
-			/**
-			 * webmapping paddocks/types
-			 * @type {object}
-			 * @namespace webmapping.paddocks/types
-			 * @memberof webmapping
-			 */
-
-			/**
-			 * Adds a new Paddock type to farmdata PaddockTypes
-			 * @method add
-			 * @param {!string} name - name of new type. it must be unique, can only contain alphanumeric values with space or underscore but no other special characters
-			 * @returns {object} PaddockTypes collection
-			 * @memberof webmapping.paddocks/types
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Returns the PaddockType at specified index
-			 * @method at
-			 * @returns {object} PaddockType
-			 * @memberof webmapping.paddocks/types
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Returns PaddockTypes collection as an array
-			 * @method toArray
-			 * @returns {Array} PaddockTypes
-			 * @memberof webmapping.paddocks/types
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Removes the Paddock type at specified index
-			 * @method removeAt
-			 * @returns {object} PaddockTypes collection
-			 * @memberof webmapping.paddocks/types
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Loads the types into the PaddockTypes
-			 * @method load
-			 * @param PaddockTypes
-			 * @returns {object} PaddockTypes collection
-			 * @memberof webmapping.paddocks/types
-			 * @public
-			 * @static
-			 */
-			types: farmdata.paddockTypes,
-
-
-			/**
-			 * webmapping paddocks/groups
-			 * @type {object}
-			 * @namespace webmapping.paddocks/groups
-			 * @memberof webmapping
-			 */
-
-			/**
-			 * Adds a new Paddock group to farmdata paddockGroups
-			 * @method add
-			 * @param {!string} name - name of new group. it must be unique, can only contain alphanumeric values with space, underscore or dash but no other special characters
-			 * @returns {object} paddockGroups collection
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Returns the PaddockGroup at specified index
-			 * @method at
-			 * @returns {object} PaddockGroup
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Returns PaddockGroups collection as an array
-			 * @method toArray
-			 * @returns {Array} PaddockGroups
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Removes the Paddock group at specified index
-			 * @method removeAt
-			 * @returns {object} PaddockGroups collection
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			/**
-			 * Loads the groups into PaddockGroups
-			 * @method load
-			 * @param PaddockGroups
-			 * @returns {object} PaddockGroups collection
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			groups: farmdata.paddockGroups
+			load: _load
 		};
 
-	});</code></pre>
+	});
+</code></pre>
         </article>
     </section>
 
@@ -226,7 +120,7 @@ angular.module('farmbuild.webmapping')
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 08 2017 15:02:31 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 09 2017 13:43:28 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

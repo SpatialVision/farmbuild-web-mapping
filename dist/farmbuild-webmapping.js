@@ -768,7 +768,7 @@ angular.module("farmbuild.webmapping").factory("webMappingMeasurement", function
 
 "use strict";
 
-angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", function(validations, webMappingMeasureControl, webMappingSnapControl, webMappingGoogleAddressSearch, webMappingLayerSwitcherControl, webMappingTransformation, webMappingConverter, $log) {
+angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", function(validations, webMappingMeasureControl, webMappingSnapControl, webMappingGoogleAddressSearch, webMappingTransformation, webMappingConverter, $log) {
     var _isDefined = validations.isDefined, _googleProjection = "EPSG:3857", _openlayersDefaultProjection = "EPSG:4326", _ZoomToExtentControl, _transform = webMappingTransformation, _converter = webMappingConverter;
     function addControlsToGmap(gmap, targetElement) {
         gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(targetElement);
@@ -785,9 +785,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         map.addControl(new webMappingMeasureControl.create(map, "Polygon"));
         map.addControl(new webMappingMeasureControl.create(map, "LineString"));
         map.addControl(new webMappingSnapControl.create());
-        map.addControl(new ol.control.LayerSwitcher({
-            tipLabel: "Switch on/off farm layers"
-        }));
     }
     function _initWithGoogleMap(map, extent, gmap, targetElement) {
         if (!_isDefined(gmap) || !_isDefined(map)) {
@@ -1278,152 +1275,6 @@ angular.module("farmbuild.webmapping").factory("webMappingTransformation", funct
         fromGoogleLatLng: _transformFromGoogleLatLng,
         toGoogleLatLng: _transformToGoogleLatLng
     };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingLayerSwitcherControl", function(validations, $rootScope, $log) {
-    ol.control.LayerSwitcher = function(opt_options) {
-        var options = opt_options || {};
-        var tipLabel = options.tipLabel ? options.tipLabel : "Legend";
-        this.mapListeners = [];
-        this.hiddenClassName = "ol-unselectable ol-control layer-switcher";
-        this.shownClassName = this.hiddenClassName + " shown";
-        var element = document.createElement("div");
-        element.className = this.hiddenClassName;
-        var button = document.createElement("button");
-        button.setAttribute("title", tipLabel);
-        element.appendChild(button);
-        this.panel = document.createElement("div");
-        this.panel.className = "panel";
-        element.appendChild(this.panel);
-        var this_ = this;
-        element.onmouseover = function(e) {
-            this_.showPanel();
-        };
-        button.onclick = function(e) {
-            this_.showPanel();
-        };
-        element.onmouseout = function(e) {
-            e = e || window.event;
-            if (!element.contains(e.toElement)) {
-                this_.hidePanel();
-            }
-        };
-        ol.control.Control.call(this, {
-            element: element,
-            target: options.target
-        });
-    };
-    ol.inherits(ol.control.LayerSwitcher, ol.control.Control);
-    ol.control.LayerSwitcher.prototype.showPanel = function() {
-        if (this.element.className != this.shownClassName) {
-            this.element.className = this.shownClassName;
-            this.renderPanel();
-        }
-    };
-    ol.control.LayerSwitcher.prototype.hidePanel = function() {
-        if (this.element.className != this.hiddenClassName) {
-            this.element.className = this.hiddenClassName;
-        }
-    };
-    ol.control.LayerSwitcher.prototype.renderPanel = function() {
-        this.ensureTopVisibleBaseLayerShown_();
-        while (this.panel.firstChild) {
-            this.panel.removeChild(this.panel.firstChild);
-        }
-        var ul = document.createElement("ul");
-        this.panel.appendChild(ul);
-        this.renderLayers_(this.getMap(), ul);
-    };
-    ol.control.LayerSwitcher.prototype.setMap = function(map) {
-        for (var i = 0, key; i < this.mapListeners.length; i++) {
-            this.getMap().unByKey(this.mapListeners[i]);
-        }
-        this.mapListeners.length = 0;
-        ol.control.Control.prototype.setMap.call(this, map);
-        if (map) {
-            var this_ = this;
-            this.mapListeners.push(map.on("pointerdown", function() {
-                this_.hidePanel();
-            }));
-            this.renderPanel();
-        }
-    };
-    ol.control.LayerSwitcher.prototype.ensureTopVisibleBaseLayerShown_ = function() {
-        var lastVisibleBaseLyr;
-        ol.control.LayerSwitcher.forEachRecursive(this.getMap(), function(l, idx, a) {
-            if (l.get("type") === "base" && l.getVisible()) {
-                lastVisibleBaseLyr = l;
-            }
-        });
-        if (lastVisibleBaseLyr) this.setVisible_(lastVisibleBaseLyr, true);
-    };
-    ol.control.LayerSwitcher.prototype.setVisible_ = function(lyr, visible) {
-        var map = this.getMap();
-        lyr.setVisible(visible);
-        if (visible && lyr.get("type") === "base") {
-            ol.control.LayerSwitcher.forEachRecursive(map, function(l, idx, a) {
-                if (l != lyr && l.get("type") === "base") {
-                    l.setVisible(false);
-                }
-            });
-        }
-    };
-    ol.control.LayerSwitcher.prototype.renderLayer_ = function(lyr, idx) {
-        var this_ = this;
-        var li = document.createElement("li");
-        var lyrTitle = lyr.get("title");
-        var lyrId = lyr.get("title").replace(" ", "-") + "_" + idx;
-        var label = document.createElement("label");
-        if (lyr.getLayers) {
-            li.className = "group";
-            label.innerHTML = lyrTitle;
-            li.appendChild(label);
-            var ul = document.createElement("ul");
-            li.appendChild(ul);
-            this.renderLayers_(lyr, ul);
-        } else {
-            var input = document.createElement("input");
-            if (lyr.get("type") === "base") {
-                input.type = "radio";
-                input.name = "base";
-            } else {
-                input.type = "checkbox";
-            }
-            input.id = lyrId;
-            input.checked = lyr.get("visible");
-            input.onchange = function(e) {
-                $rootScope.$broadcast("web-mapping-base-layer-change", {
-                    layer: lyr
-                });
-                this_.setVisible_(lyr, e.target.checked);
-            };
-            li.appendChild(input);
-            label.htmlFor = lyrId;
-            label.innerHTML = lyrTitle;
-            li.appendChild(label);
-        }
-        return li;
-    };
-    ol.control.LayerSwitcher.prototype.renderLayers_ = function(lyr, elm) {
-        var lyrs = lyr.getLayers().getArray().slice().reverse();
-        for (var i = 0, l; i < lyrs.length; i++) {
-            l = lyrs[i];
-            if (l.get("title")) {
-                elm.appendChild(this.renderLayer_(l, i));
-            }
-        }
-    };
-    ol.control.LayerSwitcher.forEachRecursive = function(lyr, fn) {
-        lyr.getLayers().forEach(function(lyr, idx, a) {
-            fn(lyr, idx, a);
-            if (lyr.getLayers) {
-                ol.control.LayerSwitcher.forEachRecursive(lyr, fn);
-            }
-        });
-    };
-    return {};
 });
 
 "use strict";

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>measurement - Documentation</title>
+    <title>parcels - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">measurement</h1>
+    <h1 class="page-title">parcels</h1>
     
 
     
@@ -43,7 +43,7 @@
         <h2>
             <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
         
-        measurement
+        parcels
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping measurement</p></div>
+            <div class="description"><p>webmapping rural parcels</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="measurement_index.src.js.html">measurement/index.src.js</a>, <a href="measurement_index.src.js.html#line3">line 3</a>
+        <a href="parcels_index.src.js.html">parcels/index.src.js</a>, <a href="parcels_index.src.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -124,14 +124,15 @@
 
     
 
-    <h4 class="name" id=".area"><span class="type-signature">(static) </span>area<span class="signature">(feature<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id=".load"><span class="type-signature">(static) </span>load<span class="signature">(serviceUrl<span class="signature-attributes">non-null</span>, extent<span class="signature-attributes">non-null</span>, extentDataProjection<span class="signature-attributes">non-null</span>, responseProjection<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Calculates are of a feature</p>
+    <p>loads rural parcels and add it as layer to ol.Map.
+This method uses JsonP to get information, make sure the projection definition matches your extent data, otherwise you will not get any data.</p>
 </div>
 
 
@@ -167,13 +168,13 @@
 
         <tr>
             
-                <td class="name"><code>feature</code></td>
+                <td class="name"><code>serviceUrl</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">ol.Feature</span>
+<span class="param-type">String</span>
 
 
             
@@ -183,7 +184,76 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>url of wfs parcels service to get data from</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ol.Extent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>extent of area to query for parcels</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>extentDataProjection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>data projection of extent data</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>responseProjection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>desired data projection of the response</p></td>
         </tr>
 
     
@@ -224,7 +294,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="measurement_index.src.js.html">measurement/index.src.js</a>, <a href="measurement_index.src.js.html#line28">line 28</a>
+        <a href="parcels_index.src.js.html">parcels/index.src.js</a>, <a href="parcels_index.src.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -251,7 +321,7 @@
 
         
 <div class="param-desc">
-    <p>area in hectare</p>
+    <p>a promise object that represents http request made to get parcels</p>
 </div>
 
 
@@ -262,160 +332,7 @@
     </dt>
     <dd>
         
-<span class="param-type">number</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".length"><span class="type-signature">(static) </span>length<span class="signature">(feature<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Calculates length of a line</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>feature</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.Feature</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="measurement_index.src.js.html">measurement/index.src.js</a>, <a href="measurement_index.src.js.html#line45">line 45</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>length in metre</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">number</span>
+<span class="param-type">object</span>
 
 
     </dd>
@@ -443,7 +360,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Aug 08 2017 15:02:31 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 09 2017 13:43:28 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

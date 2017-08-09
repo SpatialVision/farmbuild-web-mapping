@@ -12,7 +12,6 @@ angular.module('farmbuild.webmapping')
               webMappingMeasureControl,
               webMappingSnapControl,
               webMappingGoogleAddressSearch,
-              webMappingLayerSwitcherControl,
               webMappingTransformation,
               webMappingConverter,
               $log) {
@@ -39,9 +38,6 @@ angular.module('farmbuild.webmapping')
             map.addControl(new webMappingMeasureControl.create(map, 'Polygon'));
             map.addControl(new webMappingMeasureControl.create(map, 'LineString'));
             map.addControl(new webMappingSnapControl.create());
-            map.addControl(new ol.control.LayerSwitcher({
-                tipLabel: 'Switch on/off farm layers'
-            }));
         }
 
         /**
