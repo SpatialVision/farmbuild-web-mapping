@@ -1,14 +1,14 @@
 {
   "name": "farmbuild-web-mapping",
   "description": "This project is the web mapping module of farm build JavaScript library",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "homepage": "https://github.com/FarmBuild/farmbuild-web-mapping",
   "private": false,
   "main": "./dist/farmbuild-webmapping.js",
   "dependencies": {
     "proj4": "2.2.1",
     "turf": "1.4.0",
-    "farmbuild-farmdata": "https://github.com/SpatialVision/farmbuild-farmdata.git#2.2.0"
+    "farmbuild-farmdata": "https://github.com/SpatialVision/farmbuild-farmdata.git#2.2.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.6.5",
