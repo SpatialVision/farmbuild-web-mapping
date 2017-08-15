@@ -27,7 +27,7 @@ angular.module('farmbuild.webmapping')
 				drawInteraction.on('drawend', function (e) {
 					drawingStatus = false;
 					if (_mode === 'draw') {
-						$rootScope.$broadcast('web-mapping-draw-end', e.feature);
+						$rootScope.$broadcast('web-mapping-before-draw-end', e.feature);
 					}
 					if (_mode === 'donut-draw') {
 						$rootScope.$broadcast('web-mapping-donut-draw-end', e.feature);

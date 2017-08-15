@@ -181,7 +181,7 @@ angular.module("farmbuild.webmapping").factory("webMappingDrawInteraction", func
             drawInteraction.on("drawend", function(e) {
                 drawingStatus = false;
                 if (_mode === "draw") {
-                    $rootScope.$broadcast("web-mapping-draw-end", e.feature);
+                    $rootScope.$broadcast("web-mapping-before-draw-end", e.feature);
                 }
                 if (_mode === "donut-draw") {
                     $rootScope.$broadcast("web-mapping-donut-draw-end", e.feature);
@@ -357,7 +357,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
             var merged = _transform.merge(temp);
             merged.setProperties({
                 name: clipped.getProperties().name,
-                _id: clipped.getProperties()._id
+                id: clipped.getProperties().id
             });
             clipped = merged;
         }
@@ -505,9 +505,10 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _draw.disable();
         _mode = "edit";
     });
-    $rootScope.$on("web-mapping-draw-end", function(event, feature) {
+    $rootScope.$on("web-mapping-before-draw-end", function(event, feature) {
         $log.info("draw end ...");
-        _clip(feature, _farmLayerGroup);
+        var clipped = _clip(feature, _farmLayerGroup);
+        $rootScope.$broadcast("web-mapping-draw-end", clipped);
     });
     $rootScope.$on("web-mapping-donut-draw-end", function(event, feature) {
         $log.info("donut draw end ...");

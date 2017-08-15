@@ -213,7 +213,7 @@ angular.module('farmbuild.webmapping')
 				var merged = _transform.merge(temp);
 				merged.setProperties({
 					name: clipped.getProperties().name,
-					_id: clipped.getProperties()._id
+					id: clipped.getProperties().id
 				});
 				clipped = merged;
 			}
@@ -390,9 +390,10 @@ angular.module('farmbuild.webmapping')
 			_mode = 'edit';
 		});
 
-		$rootScope.$on('web-mapping-draw-end', function (event, feature) {
+		$rootScope.$on('web-mapping-before-draw-end', function (event, feature) {
 			$log.info('draw end ...');
-			_clip(feature, _farmLayerGroup);
+			var clipped = _clip(feature, _farmLayerGroup);
+			$rootScope.$broadcast('web-mapping-draw-end', clipped);
 		});
 
 		$rootScope.$on('web-mapping-donut-draw-end', function (event, feature) {
