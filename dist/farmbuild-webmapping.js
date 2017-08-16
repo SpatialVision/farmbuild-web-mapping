@@ -38,7 +38,7 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             sessionStorage.webMappingConfigs = JSON.stringify(configs);
         }
     };
-    webMapping.version = "1.1.0";
+    webMapping.version = "2.2.4";
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             webmapping: webMapping
@@ -245,6 +245,10 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _activeLayer = undefined;
         _activeLayerName = undefined;
         _mode = undefined;
+        unBindWebMappingMeasureStart();
+        unBindWebMappingMeasureEnd();
+        unBindWebMappingDonutDrawEnd();
+        unBindWebMappingBeforeDrawEnd();
     }
     function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction) {
         $log.info("interactions init ...");
@@ -265,11 +269,12 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         _select = webMappingSelectInteraction.create(map, _activeLayer);
         _modify = webMappingModifyInteraction.create(map, _select);
-        _draw = webMappingDrawInteraction.create(map, farmLayerGroup);
+        _draw = webMappingDrawInteraction.create(map);
         _snap = webMappingSnapInteraction.create(map, _farmLayer.getSource(), _paddocksLayer.getSource());
         _mode = "";
         _activeLayerName = activeLayerName;
         _select.init();
+        _select.enable();
         _modify.init();
         _draw.init();
         _snap.init(snappingDefaultStatus);
@@ -409,9 +414,18 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         $log.info("editing enabled");
         _mode = "edit";
-        _select.enable();
+        _select.disable();
         _modify.enable();
         _draw.disable();
+    }
+    function _disableEditing() {
+        if (!_isDefined(_mode) && _mode === "edit") {
+            return;
+        }
+        $log.info("editing disabled");
+        _mode = "select";
+        _select.enable();
+        _modify.disable();
     }
     function _enableDrawing() {
         if (!_isDefined(_mode) || _mode === "draw" || _mode === "measure") {
@@ -422,6 +436,15 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _select.disable();
         _modify.disable();
         _draw.enable(_mode);
+    }
+    function _disableDrawing() {
+        if (!_isDefined(_mode)) {
+            return;
+        }
+        $log.info("drawing disabled");
+        _mode = "select";
+        _select.enable();
+        _draw.disable();
     }
     function _enableDonutDrawing() {
         if (!_isDefined(_mode) || _mode === "donut-draw") {
@@ -487,7 +510,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         return _snap.enable();
     }
-    $rootScope.$on("web-mapping-measure-start", function(event, data) {
+    var unBindWebMappingMeasureStart = $rootScope.$on("web-mapping-measure-start", function(event, data) {
         if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
             return;
         }
@@ -496,7 +519,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _draw.disable();
         _mode = "measure";
     });
-    $rootScope.$on("web-mapping-measure-end", function(event, data) {
+    var unBindWebMappingMeasureEnd = $rootScope.$on("web-mapping-measure-end", function(event, data) {
         if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
             return;
         }
@@ -505,12 +528,12 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _draw.disable();
         _mode = "edit";
     });
-    $rootScope.$on("web-mapping-before-draw-end", function(event, feature) {
+    var unBindWebMappingBeforeDrawEnd = $rootScope.$on("web-mapping-before-draw-end", function(event, feature) {
         $log.info("draw end ...");
         var clipped = _clip(feature, _farmLayerGroup);
         $rootScope.$broadcast("web-mapping-draw-end", clipped);
     });
-    $rootScope.$on("web-mapping-donut-draw-end", function(event, feature) {
+    var unBindWebMappingDonutDrawEnd = $rootScope.$on("web-mapping-donut-draw-end", function(event, feature) {
         $log.info("donut draw end ...");
         _select.interaction.getFeatures().push(_clip(feature, _farmLayerGroup));
         _donutContainer = null;
@@ -555,12 +578,14 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         destroy: _destroy,
         editing: {
             enable: _enableEditing,
+            disable: _disableEditing,
             isEditing: _isEditing
         },
         drawing: {
             discard: _discardDrawing,
             finish: _finishDrawing,
             enable: _enableDrawing,
+            disable: _disableDrawing,
             isDrawing: _isDrawing
         },
         donut: {
@@ -635,6 +660,13 @@ angular.module("farmbuild.webmapping").factory("webMappingSelectInteraction", fu
             selectConfig.addCondition = ol.events.condition.never;
             selectConfig.toggleCondition = ol.events.condition.never;
         }
+        selectConfig.style = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: "#3399CC",
+                width: 4
+            }),
+            zIndex: Infinity
+        });
         var selectInteraction = new ol.interaction.Select(selectConfig);
         function _init() {
             $log.info("select interaction init ...");
@@ -868,12 +900,9 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             source: paddocksSource,
             title: "Paddocks",
             style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: "rgba(255, 255, 255, 0.3)"
-                }),
                 stroke: new ol.style.Stroke({
-                    color: "#319FD3",
-                    width: 1
+                    color: "#FF6600",
+                    width: 3
                 })
             })
         });

@@ -56,6 +56,10 @@ angular.module('farmbuild.webmapping')
 			_activeLayer = undefined;
 			_activeLayerName = undefined;
 			_mode = undefined;
+			unBindWebMappingMeasureStart();
+			unBindWebMappingMeasureEnd();
+			unBindWebMappingDonutDrawEnd();
+			unBindWebMappingBeforeDrawEnd();
 		};
 
 		/**
@@ -92,12 +96,13 @@ angular.module('farmbuild.webmapping')
 
 			_select = webMappingSelectInteraction.create(map, _activeLayer);
 			_modify = webMappingModifyInteraction.create(map, _select);
-			_draw = webMappingDrawInteraction.create(map, farmLayerGroup);
+			_draw = webMappingDrawInteraction.create(map);
 			_snap = webMappingSnapInteraction.create(map, _farmLayer.getSource(), _paddocksLayer.getSource());
 			_mode = '';
 			_activeLayerName = activeLayerName;
 
 			_select.init();
+			_select.enable();
 			_modify.init();
 			_draw.init();
 			_snap.init(snappingDefaultStatus);
@@ -280,9 +285,19 @@ angular.module('farmbuild.webmapping')
 			}
 			$log.info('editing enabled');
 			_mode = 'edit';
-			_select.enable();
+			_select.disable();
 			_modify.enable();
 			_draw.disable();
+		};
+
+		function _disableEditing() {
+			if (!_isDefined(_mode) && _mode === 'edit') {
+				return;
+			}
+			$log.info('editing disabled');
+			_mode = 'select';
+			_select.enable();
+			_modify.disable();
 		};
 
 		function _enableDrawing() {
@@ -294,6 +309,16 @@ angular.module('farmbuild.webmapping')
 			_select.disable();
 			_modify.disable();
 			_draw.enable(_mode);
+		};
+
+		function _disableDrawing() {
+			if (!_isDefined(_mode)) {
+				return;
+			}
+			$log.info('drawing disabled');
+			_mode = 'select';
+			_select.enable();
+			_draw.disable();
 		};
 
 		function _enableDonutDrawing() {
@@ -370,7 +395,7 @@ angular.module('farmbuild.webmapping')
 			return _snap.enable();
 		};
 
-		$rootScope.$on('web-mapping-measure-start', function (event, data) {
+		var unBindWebMappingMeasureStart = $rootScope.$on('web-mapping-measure-start', function (event, data) {
 			if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
 				return;
 			}
@@ -379,8 +404,8 @@ angular.module('farmbuild.webmapping')
 			_draw.disable();
 			_mode = 'measure';
 		});
-
-		$rootScope.$on('web-mapping-measure-end', function (event, data) {
+		
+		var unBindWebMappingMeasureEnd = $rootScope.$on('web-mapping-measure-end', function (event, data) {
 			if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
 				return;
 			}
@@ -389,14 +414,14 @@ angular.module('farmbuild.webmapping')
 			_draw.disable();
 			_mode = 'edit';
 		});
-
-		$rootScope.$on('web-mapping-before-draw-end', function (event, feature) {
+		
+		var unBindWebMappingBeforeDrawEnd = $rootScope.$on('web-mapping-before-draw-end', function (event, feature) {
 			$log.info('draw end ...');
 			var clipped = _clip(feature, _farmLayerGroup);
 			$rootScope.$broadcast('web-mapping-draw-end', clipped);
 		});
-
-		$rootScope.$on('web-mapping-donut-draw-end', function (event, feature) {
+		
+		var unBindWebMappingDonutDrawEnd = $rootScope.$on('web-mapping-donut-draw-end', function (event, feature) {
 			$log.info('donut draw end ...');
 			_select.interaction.getFeatures().push(_clip(feature, _farmLayerGroup));
 			_donutContainer = null;
@@ -463,6 +488,12 @@ angular.module('farmbuild.webmapping')
 				 */
 				enable: _enableEditing,
 				/**
+				 * Disables webmapping edit mode
+				 * @memberof webmapping.actions.editing
+				 * @method enable
+				 */
+				disable: _disableEditing,
+				/**
 				 * Whether editng is in progress
 				 * @memberof webmapping.actions.editing
 				 * @method isEditing
@@ -495,6 +526,12 @@ angular.module('farmbuild.webmapping')
 				 * @method enable
 				 */
 				enable: _enableDrawing,
+				/**
+				 * Disable webmapping draw mode
+				 * @memberof webmapping.actions.drawing
+				 * @method disable
+				 */
+				disable: _disableDrawing,
 				/**
 				 * Whether drawing is in progress
 				 * @memberof webmapping.actions.drawing

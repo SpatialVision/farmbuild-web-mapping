@@ -162,12 +162,9 @@ angular.module('farmbuild.webmapping')
                 source: paddocksSource,
                 title: 'Paddocks',
                 style: new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: 'rgba(255, 255, 255, 0.3)'
-                    }),
                     stroke: new ol.style.Stroke({
-                        color: '#319FD3',
-                        width: 1
+                        color: '#FF6600',
+                        width: 3
                     })
                 })
             });
