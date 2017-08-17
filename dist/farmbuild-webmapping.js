@@ -38,7 +38,7 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             sessionStorage.webMappingConfigs = JSON.stringify(configs);
         }
     };
-    webMapping.version = "2.2.4";
+    webMapping.version = "2.2.5";
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             webmapping: webMapping
@@ -660,13 +660,18 @@ angular.module("farmbuild.webmapping").factory("webMappingSelectInteraction", fu
             selectConfig.addCondition = ol.events.condition.never;
             selectConfig.toggleCondition = ol.events.condition.never;
         }
-        selectConfig.style = new ol.style.Style({
+        var width = 3;
+        selectConfig.style = [ new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: "#3399CC",
-                width: 4
-            }),
-            zIndex: Infinity
-        });
+                color: "white",
+                width: width + 2
+            })
+        }), new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: "#ff6600",
+                width: width
+            })
+        }) ];
         var selectInteraction = new ol.interaction.Select(selectConfig);
         function _init() {
             $log.info("select interaction init ...");
@@ -901,7 +906,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             title: "Paddocks",
             style: new ol.style.Style({
                 stroke: new ol.style.Stroke({
-                    color: "#FF6600",
+                    color: "#3399CC",
                     width: 3
                 })
             })

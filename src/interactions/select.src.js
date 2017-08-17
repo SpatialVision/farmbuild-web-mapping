@@ -25,13 +25,21 @@ angular.module('farmbuild.webmapping')
 				selectConfig.toggleCondition = ol.events.condition.never
 			}
 			
-			selectConfig.style = new ol.style.Style({
-				stroke: new ol.style.Stroke({
-					color: '#3399CC',
-					width: 4
+			var width = 3;
+			selectConfig.style = [
+				new ol.style.Style({
+					stroke: new ol.style.Stroke({
+						color: 'white',
+						width: width + 2
+					})
 				}),
-				zIndex: Infinity
-			});
+				new ol.style.Style({
+					stroke: new ol.style.Stroke({
+						color: '#ff6600',
+						width: width
+					})
+				})
+			];
 
 			var selectInteraction = new ol.interaction.Select(selectConfig);
 

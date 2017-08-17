@@ -163,7 +163,7 @@ angular.module('farmbuild.webmapping')
                 title: 'Paddocks',
                 style: new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: '#FF6600',
+                        color: '#3399CC',
                         width: 3
                     })
                 })

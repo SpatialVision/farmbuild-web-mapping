@@ -262,7 +262,7 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 			};
 
 		// Provide a shortcut for modules
-		webMapping.version = '2.2.4';
+		webMapping.version = '2.2.5';
 
 		if (typeof window.farmbuild === 'undefined') {
 			window.farmbuild = {
