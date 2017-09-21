@@ -189,6 +189,7 @@ angular.module("farmbuild.webmapping").factory("webMappingDrawInteraction", func
             });
             drawInteraction.on("drawstart", function(event) {
                 $log.info("draw start ...");
+                $rootScope.$broadcast("web-mapping-draw-start", event.feature);
                 drawingStatus = true;
             });
         }

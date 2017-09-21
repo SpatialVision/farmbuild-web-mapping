@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>paddocks - Documentation</title>
+    <title>events - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">paddocks</h1>
+    <h1 class="page-title">events</h1>
     
 
     
@@ -43,7 +43,7 @@
         <h2>
             <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
         
-        paddocks
+        events
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping paddock</p></div>
+            <div class="description"><p>webmapping events</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line10">line 10</a>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line151">line 151</a>
     </li></ul></dd>
     
 
@@ -124,14 +124,15 @@
 
     
 
-    <h4 class="name" id=".findByCoordinate"><span class="type-signature">(static) </span>findByCoordinate<span class="signature">(coordinate<span class="signature-attributes">non-null</span>, vectorLayer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {ol.Feature}</span></h4>
+    <h4 class="name" id=".web-mapping-base-layer-change"><span class="type-signature">(static) </span>web-mapping-base-layer-change<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>finds a paddock based on the coordinate</p>
+    <p>Fires on base layer change
+It passes the selected layer to the listener function as the first parameter</p>
 </div>
 
 
@@ -140,78 +141,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>coordinate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.Coordinate</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>openlayers map object</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>vectorLayer</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.layer.Vector</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddock layer</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -247,7 +176,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line20">line 20</a>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line192">line 192</a>
     </li></ul></dd>
     
 
@@ -270,28 +199,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>the first paddock found in that coordinate</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">ol.Feature</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -300,14 +207,15 @@
 
     
 
-    <h4 class="name" id=".findById"><span class="type-signature">(static) </span>findById<span class="signature">(id<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+    <h4 class="name" id=".web-mapping-donut-draw-end"><span class="type-signature">(static) </span>web-mapping-donut-draw-end<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Find paddock by id</p>
+    <p>Fires once donut drawing is enabled and drawing of the donut polygon is completed.
+Passes the drawn feature to the listener function as the first parameter</p>
 </div>
 
 
@@ -316,78 +224,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>id of the paddock to search for</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>paddocks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddocks array to search on</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -423,7 +259,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line53">line 53</a>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -446,28 +282,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>paddock Object</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -476,14 +290,15 @@
 
     
 
-    <h4 class="name" id=".findByName"><span class="type-signature">(static) </span>findByName<span class="signature">(name<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+    <h4 class="name" id=".web-mapping-draw-end"><span class="type-signature">(static) </span>web-mapping-draw-end<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Find paddock by name</p>
+    <p>Fires once a active drawing is completed.
+Passes the drawn feature to the listener function as the first parameter</p>
 </div>
 
 
@@ -492,78 +307,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>name of the paddock to search for</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>paddocks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddocks array to search on</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -599,7 +342,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line43">line 43</a>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line157">line 157</a>
     </li></ul></dd>
     
 
@@ -622,28 +365,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>paddock Object</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -652,14 +373,15 @@
 
     
 
-    <h4 class="name" id=".toGeoJSON"><span class="type-signature">(static) </span>toGeoJSON<span class="signature">(paddock<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id=".web-mapping-feature-deselect"><span class="type-signature">(static) </span>web-mapping-feature-deselect<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Returns GeoJSON for a given paddock</p>
+    <p>Fires once a feature(polygon) is deselected.
+Passes the deselected feature to the listener function as the first parameter</p>
 </div>
 
 
@@ -668,55 +390,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>paddock</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddock object</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -752,7 +425,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line63">line 63</a>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -775,28 +448,172 @@
 
 
 
-<h5>Returns:</h5>
+
+
 
         
-<div class="param-desc">
-    <p>Paddock Feature Object</p>
+            
+
+    
+
+    <h4 class="name" id=".web-mapping-feature-select"><span class="type-signature">(static) </span>web-mapping-feature-select<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Fires once a feature(polygon) is selected.
+Passes the selected feature to the listener function as the first parameter</p>
 </div>
 
 
 
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
 
 
-    </dd>
-</dl>
+
+
+
+
+
+
+
+
+<dl class="details">
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line171">line 171</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".web-mapping-measure-end"><span class="type-signature">(static) </span>web-mapping-measure-end<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Fires after measuring is completed.
+Passes an object containing value and unit of measurement to the listener function as the first parameter</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="web-mapping.src.js.html">web-mapping.src.js</a>, <a href="web-mapping.src.js.html#line185">line 185</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -818,7 +635,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Aug 17 2017 14:05:11 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Thu Sep 21 2017 11:59:52 GMT+1000 (AEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
