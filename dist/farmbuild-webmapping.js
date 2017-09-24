@@ -1036,7 +1036,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         map = _ZoomToExtentControl.getMap();
         map.removeControl(_ZoomToExtentControl);
         _ZoomToExtentControl = new ol.control.ZoomToExtent({
-            extent: map.getLayers().item(1).getLayers().item(1).getSource().getExtent()
+            extent: map.getLayers().item(1).getLayers().item(0).getSource().getExtent()
         });
         map.addControl(_ZoomToExtentControl);
     }
