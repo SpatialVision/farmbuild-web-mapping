@@ -897,6 +897,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         }
         $log.info("creating paddocks vector layer ...", dataProjection, _googleProjection);
         var paddocksSource = new ol.source.Vector({
+            wrapX: false,
             features: new ol.format.GeoJSON().readFeatures(paddocksGeometry, {
                 dataProjection: dataProjection,
                 featureProjection: _googleProjection
@@ -919,6 +920,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         }
         $log.info("creating farm vector layer ...", dataProjection, _googleProjection);
         var farmSource = new ol.source.Vector({
+            wrapX: false,
             features: new ol.format.GeoJSON().readFeatures(farmGeometry, {
                 dataProjection: dataProjection,
                 featureProjection: _googleProjection
