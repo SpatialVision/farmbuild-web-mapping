@@ -38,7 +38,7 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             sessionStorage.webMappingConfigs = JSON.stringify(configs);
         }
     };
-    webMapping.version = "2.2.5";
+    webMapping.version = "2.2.9";
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             webmapping: webMapping
