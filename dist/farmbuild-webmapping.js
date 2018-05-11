@@ -724,23 +724,6 @@ angular.module("farmbuild.webmapping").factory("webMappingSnapInteraction", func
         function _disable() {
             snapInteraction.setActive(false);
         }
-        snapVisibleLayer = new ol.layer.Vector({
-            source: new ol.source.Vector(),
-            title: "Rural Parcels",
-            style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: "rgba(238,238,238,.7)",
-                    width: 1
-                })
-            })
-        });
-        map.addLayer(snapVisibleLayer);
-        function _addFeatures(parcels) {
-            parcels.forEach(function(parcel) {
-                snapInteraction.addFeature(parcel);
-            });
-            snapVisibleLayer.getSource().addFeatures(parcels);
-        }
         function _init(active) {
             $log.info("snap interaction init ...");
             map.addInteraction(snapInteraction);
@@ -751,14 +734,12 @@ angular.module("farmbuild.webmapping").factory("webMappingSnapInteraction", func
                 $log.error("There is a problem with input parameters, map object is not defined");
                 return;
             }
-            map.removeLayer(snapVisibleLayer);
             map.removeInteraction(snapInteraction);
         }
         return {
             init: _init,
             enable: _enable,
             disable: _disable,
-            addFeatures: _addFeatures,
             interaction: snapInteraction,
             destroy: _destroy
         };
@@ -823,7 +804,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         map.addControl(new ol.control.ScaleLine());
         map.addControl(new webMappingMeasureControl.create(map, "Polygon"));
         map.addControl(new webMappingMeasureControl.create(map, "LineString"));
-        map.addControl(new webMappingSnapControl.create());
     }
     function _initWithGoogleMap(map, extent, gmap, targetElement) {
         if (!_isDefined(gmap) || !_isDefined(map)) {
