@@ -230,6 +230,10 @@ angular.module("farmbuild.webmapping").factory("webMappingDrawInteraction", func
 
 angular.module("farmbuild.webmapping").factory("webMappingInteractions", function(validations, $log, webMappingSelectInteraction, webMappingModifyInteraction, webMappingDrawInteraction, webMappingSnapInteraction, webMappingGeoProcessing, $rootScope) {
     var _isDefined = validations.isDefined, _select, _modify, _draw, _snap, _activeLayer, _activeLayerName, _mode, _farmLayerGroup, _farmLayer, _paddocksLayer, _map, _transform = webMappingGeoProcessing, _farmName, _donutContainer;
+    var unBindWebMappingMeasureStart;
+    var unBindWebMappingMeasureEnd;
+    var unBindWebMappingBeforeDrawEnd;
+    var unBindWebMappingDonutDrawEnd;
     function _destroy(map) {
         $log.info("destroying all interactions ...");
         if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_snap) || !_isDefined(_draw)) {
@@ -282,6 +286,37 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         if (initKeyboardInteraction) {
             _enableKeyboardShortcuts();
         }
+        _addEventListeners();
+    }
+    function _addEventListeners() {
+        unBindWebMappingMeasureStart = $rootScope.$on("web-mapping-measure-start", function(event, data) {
+            if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
+                return;
+            }
+            _select.disable();
+            _modify.disable();
+            _draw.disable();
+            _mode = "measure";
+        });
+        unBindWebMappingMeasureEnd = $rootScope.$on("web-mapping-measure-end", function(event, data) {
+            if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
+                return;
+            }
+            _select.enable();
+            _modify.enable();
+            _draw.disable();
+            _mode = "edit";
+        });
+        unBindWebMappingBeforeDrawEnd = $rootScope.$on("web-mapping-before-draw-end", function(event, feature) {
+            $log.info("draw end ...");
+            var clipped = _clip(feature, _farmLayerGroup);
+            $rootScope.$broadcast("web-mapping-draw-end", clipped);
+        });
+        unBindWebMappingDonutDrawEnd = $rootScope.$on("web-mapping-donut-draw-end", function(event, feature) {
+            $log.info("donut draw end ...");
+            _select.interaction.getFeatures().push(_clip(feature, _farmLayerGroup));
+            _donutContainer = null;
+        });
     }
     function _addFeature(layer, feature, newProperties) {
         var properties = newProperties || {};
@@ -511,34 +546,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         return _snap.enable();
     }
-    var unBindWebMappingMeasureStart = $rootScope.$on("web-mapping-measure-start", function(event, data) {
-        if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
-            return;
-        }
-        _select.disable();
-        _modify.disable();
-        _draw.disable();
-        _mode = "measure";
-    });
-    var unBindWebMappingMeasureEnd = $rootScope.$on("web-mapping-measure-end", function(event, data) {
-        if (!_isDefined(_select) || !_isDefined(_modify) || !_isDefined(_draw)) {
-            return;
-        }
-        _select.enable();
-        _modify.enable();
-        _draw.disable();
-        _mode = "edit";
-    });
-    var unBindWebMappingBeforeDrawEnd = $rootScope.$on("web-mapping-before-draw-end", function(event, feature) {
-        $log.info("draw end ...");
-        var clipped = _clip(feature, _farmLayerGroup);
-        $rootScope.$broadcast("web-mapping-draw-end", clipped);
-    });
-    var unBindWebMappingDonutDrawEnd = $rootScope.$on("web-mapping-donut-draw-end", function(event, feature) {
-        $log.info("donut draw end ...");
-        _select.interaction.getFeatures().push(_clip(feature, _farmLayerGroup));
-        _donutContainer = null;
-    });
     function _enableKeyboardShortcuts() {
         var element = _map.getTargetElement();
         element.tabIndex = 0;
@@ -802,8 +809,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             map.addControl(_ZoomToExtentControl);
         }
         map.addControl(new ol.control.ScaleLine());
-        map.addControl(new webMappingMeasureControl.create(map, "Polygon"));
-        map.addControl(new webMappingMeasureControl.create(map, "LineString"));
     }
     function _initWithGoogleMap(map, extent, gmap, targetElement) {
         if (!_isDefined(gmap) || !_isDefined(map)) {
@@ -1010,7 +1015,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         }
         webMappingGoogleAddressSearch.init(textInputElement, onPlaceChanged);
     }
-    function _updateZoomToExtent() {
+    function _updateZoomToExtent(extent) {
         var map;
         if (!_isDefined(_ZoomToExtentControl)) {
             return;
@@ -1018,7 +1023,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         map = _ZoomToExtentControl.getMap();
         map.removeControl(_ZoomToExtentControl);
         _ZoomToExtentControl = new ol.control.ZoomToExtent({
-            extent: map.getLayers().item(1).getLayers().item(0).getSource().getExtent()
+            extent: extent
         });
         map.addControl(_ZoomToExtentControl);
     }

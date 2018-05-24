@@ -35,8 +35,6 @@ angular.module('farmbuild.webmapping')
                 map.addControl(_ZoomToExtentControl);
             }
             map.addControl(new ol.control.ScaleLine());
-            map.addControl(new webMappingMeasureControl.create(map, 'Polygon'));
-            map.addControl(new webMappingMeasureControl.create(map, 'LineString'));
         }
 
         /**
@@ -336,7 +334,7 @@ angular.module('farmbuild.webmapping')
          * @method updateExtent
          * @memberof webmapping.olHelper
          */
-        function _updateZoomToExtent() {
+        function _updateZoomToExtent(extent) {
             var map;
             if (!_isDefined(_ZoomToExtentControl)) {
                 return;
@@ -344,7 +342,7 @@ angular.module('farmbuild.webmapping')
             map = _ZoomToExtentControl.getMap();
             map.removeControl(_ZoomToExtentControl);
             _ZoomToExtentControl = new ol.control.ZoomToExtent({
-                extent: map.getLayers().item(1).getLayers().item(0).getSource().getExtent()
+                extent: extent
             });
             map.addControl(_ZoomToExtentControl);
         };
