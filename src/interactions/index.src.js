@@ -75,8 +75,9 @@ angular.module('farmbuild.webmapping')
 		 * @param {!String} activeLayerName - can be "paddocks" or "farm", the layer which you want to interact with
 		 * @param {Boolean} snappingDefaultStatus - whether to activate snapping, snapping is used between farm, paddocks and rural parcels
 		 * @param {Boolean} initKeyboardInteraction - whether to activate keyboard interaction
+		 * @param {Boolean} enableMultiSelect - whether to activate multi select for paddocks
 		 */
-		function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction) {
+		function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction, enableMultiSelect) {
 
 			$log.info('interactions init ...');
 			if (!_isDefined(activeLayerName) || !_isDefined(map) || !_isDefined(farmLayerGroup)) {
@@ -98,7 +99,7 @@ angular.module('farmbuild.webmapping')
 				return;
 			}
 
-			_select = webMappingSelectInteraction.create(map, _activeLayer);
+			_select = webMappingSelectInteraction.create(map, _activeLayer, enableMultiSelect);
 			_modify = webMappingModifyInteraction.create(map, _select);
 			_draw = webMappingDrawInteraction.create(map);
 			_snap = webMappingSnapInteraction.create(map, _farmLayer.getSource(), _paddocksLayer.getSource());
