@@ -49,10 +49,14 @@ angular.module('farmbuild.webmapping')
 				selectInteraction.setActive(false);
 				selectInteraction.getFeatures().on('change:length', function(){
 					var selections = selectInteraction.getFeatures();
-					if(selections.getLength() > 0) {
-						$rootScope.$broadcast('web-mapping-feature-select', selectInteraction.getFeatures().item(0));
-						return;
-					}
+                    if (!selectConfig.multi && selections.getLength() > 0) {
+                        $rootScope.$broadcast("web-mapping-feature-select", selectInteraction.getFeatures().item(0));
+                        return;
+                    }
+                    if (selectConfig.multi && selections.getLength() > 0) {
+                        $rootScope.$broadcast("web-mapping-feature-select", selectInteraction.getFeatures().getArray());
+                        return;
+                    }
 					$rootScope.$broadcast('web-mapping-feature-deselect');
 				})
 			}
