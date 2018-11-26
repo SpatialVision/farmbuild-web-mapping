@@ -255,7 +255,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         unBindWebMappingDonutDrawEnd();
         unBindWebMappingBeforeDrawEnd();
     }
-    function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction) {
+    function _init(map, farmLayerGroup, activeLayerName, snappingDefaultStatus, initKeyboardInteraction, enableMultiSelect) {
         $log.info("interactions init ...");
         if (!_isDefined(activeLayerName) || !_isDefined(map) || !_isDefined(farmLayerGroup)) {
             return;
@@ -272,7 +272,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         } else {
             return;
         }
-        _select = webMappingSelectInteraction.create(map, _activeLayer);
+        _select = webMappingSelectInteraction.create(map, _activeLayer, enableMultiSelect);
         _modify = webMappingModifyInteraction.create(map, _select);
         _draw = webMappingDrawInteraction.create(map);
         _snap = webMappingSnapInteraction.create(map, _farmLayer.getSource(), _paddocksLayer.getSource());

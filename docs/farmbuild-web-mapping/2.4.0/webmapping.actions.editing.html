@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>paddocks - Documentation</title>
+    <title>editing - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">paddocks</h1>
+    <h1 class="page-title">editing</h1>
     
 
     
@@ -41,9 +41,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
+            <span class="ancestors"><a href="webmapping.html">webmapping</a><a href="webmapping.actions.html">.actions</a>.</span>
         
-        paddocks
+        editing
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping paddock</p></div>
+            <div class="description"><p>Editing namespace of webmapping.actions</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line10">line 10</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line484">line 484</a>
     </li></ul></dd>
     
 
@@ -124,14 +124,14 @@
 
     
 
-    <h4 class="name" id=".findByCoordinate"><span class="type-signature">(static) </span>findByCoordinate<span class="signature">(coordinate<span class="signature-attributes">non-null</span>, vectorLayer<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {ol.Feature}</span></h4>
+    <h4 class="name" id=".enable"><span class="type-signature">(static) </span>enable<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>finds a paddock based on the coordinate</p>
+    <p>Enables webmapping edit mode</p>
 </div>
 
 
@@ -140,78 +140,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>coordinate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.Coordinate</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>openlayers map object</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>vectorLayer</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">ol.layer.Vector</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddock layer</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -247,7 +175,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line20">line 20</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line491">line 491</a>
     </li></ul></dd>
     
 
@@ -270,28 +198,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>the first paddock found in that coordinate</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">ol.Feature</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -300,14 +206,14 @@
 
     
 
-    <h4 class="name" id=".findById"><span class="type-signature">(static) </span>findById<span class="signature">(id<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+    <h4 class="name" id=".enable"><span class="type-signature">(static) </span>enable<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Find paddock by id</p>
+    <p>Disables webmapping edit mode</p>
 </div>
 
 
@@ -316,78 +222,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>id of the paddock to search for</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>paddocks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddocks array to search on</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -423,7 +257,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line53">line 53</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line497">line 497</a>
     </li></ul></dd>
     
 
@@ -446,28 +280,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>paddock Object</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 
@@ -476,14 +288,14 @@
 
     
 
-    <h4 class="name" id=".findByName"><span class="type-signature">(static) </span>findByName<span class="signature">(name<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+    <h4 class="name" id=".isEditing"><span class="type-signature">(static) </span>isEditing<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Find paddock by name</p>
+    <p>Whether editng is in progress</p>
 </div>
 
 
@@ -492,78 +304,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>name of the paddock to search for</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>paddocks</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddocks array to search on</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -599,7 +339,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line43">line 43</a>
+        <a href="interactions_index.src.js.html">interactions/index.src.js</a>, <a href="interactions_index.src.js.html#line503">line 503</a>
     </li></ul></dd>
     
 
@@ -626,7 +366,7 @@
 
         
 <div class="param-desc">
-    <p>paddock Object</p>
+    <p>is editing is in progress</p>
 </div>
 
 
@@ -637,160 +377,7 @@
     </dt>
     <dd>
         
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id=".toGeoJSON"><span class="type-signature">(static) </span>toGeoJSON<span class="signature">(paddock<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Returns GeoJSON for a given paddock</p>
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>paddock</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>paddock object</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line63">line 63</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>Paddock Feature Object</p>
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
+<span class="param-type">boolean</span>
 
 
     </dd>
@@ -818,7 +405,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu May 24 2018 16:05:07 GMT+1000 (AEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Nov 26 2018 13:15:12 GMT+1100 (AEDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
