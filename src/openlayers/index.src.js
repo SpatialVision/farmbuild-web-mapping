@@ -9,8 +9,6 @@
 angular.module('farmbuild.webmapping')
     .factory('webMappingOpenLayersHelper',
     function (validations,
-              webMappingMeasureControl,
-              webMappingSnapControl,
               webMappingGoogleAddressSearch,
               webMappingTransformation,
               webMappingConverter,

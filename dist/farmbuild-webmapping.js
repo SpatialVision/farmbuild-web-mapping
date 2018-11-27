@@ -723,7 +723,7 @@ angular.module("farmbuild.webmapping").factory("webMappingMeasurement", function
 
 "use strict";
 
-angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", function(validations, webMappingMeasureControl, webMappingSnapControl, webMappingGoogleAddressSearch, webMappingTransformation, webMappingConverter, $log) {
+angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", function(validations, webMappingGoogleAddressSearch, webMappingTransformation, webMappingConverter, $log) {
     var _isDefined = validations.isDefined, _googleProjection = "EPSG:3857", _ZoomToExtentControl, _transform = webMappingTransformation, _converter = webMappingConverter;
     function addControlsToOlMap(map, extent) {
         if (extent) {
@@ -1037,127 +1037,6 @@ angular.module("farmbuild.webmapping").factory("webMappingTransformation", funct
     return {
         fromGoogleLatLng: _transformFromGoogleLatLng,
         toGoogleLatLng: _transformToGoogleLatLng
-    };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingMeasureControl", function(validations, webMappingMeasurement, $rootScope, $log) {
-    var _isDefined = validations.isDefined, _measurement = webMappingMeasurement;
-    function _create(map, type) {
-        var source = new ol.source.Vector(), baseCssClass = "measure ol-unselectable ol-control ", drawInteraction = new ol.interaction.Draw({
-            source: source,
-            type: type,
-            style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: "rgba(255, 255, 255, 0.2)"
-                }),
-                stroke: new ol.style.Stroke({
-                    color: "rgba(0, 0, 0, 0.5)",
-                    lineDash: [ 10, 10 ],
-                    width: 2
-                }),
-                image: new ol.style.Circle({
-                    radius: 5,
-                    stroke: new ol.style.Stroke({
-                        color: "rgba(0, 0, 0, 0.7)"
-                    }),
-                    fill: new ol.style.Fill({
-                        color: "rgba(255, 255, 255, 0.2)"
-                    })
-                })
-            })
-        });
-        var letter, cssClass, options = {};
-        if (type == "Polygon") {
-            letter = "A";
-            cssClass = "area";
-        } else {
-            letter = "L";
-            cssClass = "length";
-        }
-        drawInteraction.on("drawend", function(evt) {
-            if (type == "Polygon") {
-                $rootScope.$broadcast("web-mapping-measure-end", {
-                    value: _measurement.area(evt.feature),
-                    unit: "hectares"
-                });
-            } else {
-                $rootScope.$broadcast("web-mapping-measure-end", {
-                    value: _measurement.length(evt.feature),
-                    unit: "metres"
-                });
-            }
-            drawInteraction.setActive(false);
-            document.getElementsByClassName(baseCssClass + cssClass)[0].className = baseCssClass + cssClass;
-        }, this);
-        map.addInteraction(drawInteraction);
-        drawInteraction.setActive(false);
-        function _measureControl(type) {
-            var button = document.createElement("button");
-            button.innerHTML = letter;
-            var handleMeasure = function(e) {
-                drawInteraction.setActive(!drawInteraction.getActive());
-                element.className = baseCssClass + cssClass + (drawInteraction.getActive() ? " active" : "");
-                $rootScope.$broadcast("web-mapping-measure-start");
-            };
-            button.addEventListener("click", handleMeasure, false);
-            button.addEventListener("touchstart", handleMeasure, false);
-            var element = document.createElement("div");
-            element.className = baseCssClass + cssClass;
-            element.title = "Measure " + cssClass;
-            element.appendChild(button);
-            ol.control.Control.call(this, {
-                element: element,
-                target: options.target
-            });
-        }
-        ol.inherits(_measureControl, ol.control.Control);
-        return new _measureControl(type);
-    }
-    return {
-        create: _create
-    };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingSnapControl", function(validations, $rootScope, $log) {
-    var _isDefined = validations.isDefined;
-    function _create() {
-        var baseCssClass = "snap ol-unselectable ol-control ";
-        var letter = "S", options = {};
-        var button = document.createElement("button");
-        button.innerHTML = letter;
-        function toggle(e) {
-            var eventToCast;
-            if (farmbuild.webmapping.actions.snapping.active()) {
-                farmbuild.webmapping.actions.snapping.disable();
-                eventToCast = "web-mapping-snap-disabled";
-                element.className = baseCssClass;
-                element.title = "Enable snapping";
-            } else {
-                farmbuild.webmapping.actions.snapping.enable();
-                eventToCast = "web-mapping-snap-enabled";
-                element.className = baseCssClass + "active";
-                element.title = "Disable snapping";
-            }
-            $rootScope.$broadcast(eventToCast);
-        }
-        button.addEventListener("click", toggle, false);
-        button.addEventListener("touchstart", toggle, false);
-        var element = document.createElement("div");
-        element.className = baseCssClass + " active";
-        element.title = "Disable snapping";
-        element.appendChild(button);
-        ol.control.Control.call(this, {
-            element: element,
-            target: options.target
-        });
-    }
-    ol.inherits(_create, ol.control.Control);
-    return {
-        create: _create
     };
 });
 
