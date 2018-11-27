@@ -85,6 +85,22 @@ angular.module('farmbuild.webmapping')
             }
         };
 
+        /**
+         * Centers map at the specified coordinates and set zoom to a proper level
+         * @method center
+         * @param {!ol.Coordinate} coordinates
+         * @param {!ol.Map} map object to interact with
+         * @memberof webmapping.olHelper
+         */
+        function _center(coordinates, map) {
+            if (!_isDefined(coordinates) || !_isDefined(map)) {
+                return;
+            }
+            $log.info('centring view ...');
+            map.getView().setCenter(coordinates);
+            map.getView().setZoom(15);
+        };
+
         function _createPaddocksLayer(paddocksGeometry, dataProjection) {
             if (!_isDefined(paddocksGeometry) || !_isDefined(dataProjection)) {
                 return;
