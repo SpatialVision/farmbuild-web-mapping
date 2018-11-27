@@ -1,21 +1,15 @@
 "use strict";
 
-angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("webmapping", function(farmdata, validations, $log, $rootScope, geoJsonValidator, farmdataConverter, webMappingSession, webMappingProjections, webMappingInteractions, webMappingMeasurement, webMappingPaddocks, webMappingOpenLayersHelper, webMappingGoogleAddressSearch, webMappingGoogleAnalytics, webMappingPrint, webMappingParcels) {
+angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("webmapping", function(farmdata, validations, $log, $rootScope, geoJsonValidator, farmdataConverter, webMappingSession, webMappingProjections, webMappingInteractions, webMappingMeasurement, webMappingPaddocks, webMappingOpenLayersHelper) {
     $log.info("Welcome to Web Mapping...");
     var _isDefined = validations.isDefined, _isEmpty = validations.isEmpty, session = webMappingSession, webMapping = {
         session: session,
         farmdata: farmdata,
         validator: geoJsonValidator,
         toGeoJsons: farmdataConverter.toGeoJsons,
-        toKml: farmdataConverter.toKml,
-        toGeoJson: farmdataConverter.toGeoJson,
-        exportGeoJson: farmdataConverter.exportGeoJson,
-        exportKml: farmdataConverter.exportKml,
         actions: webMappingInteractions,
         paddocks: webMappingPaddocks,
         olHelper: webMappingOpenLayersHelper,
-        ga: webMappingGoogleAnalytics,
-        parcels: webMappingParcels,
         measurement: webMappingMeasurement,
         load: session.load,
         find: session.find,
@@ -23,14 +17,11 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             var farmData = session.find();
             return session.save(farmData, geoJsons);
         },
-        "export": session.export,
         create: farmdata.create,
         on: function(name, listener) {
             return $rootScope.$on(name, listener);
         },
         update: session.update,
-        print: webMappingPrint.print,
-        printer: webMappingPrint,
         debug: function(configs) {
             if (_isEmpty(configs)) {
                 return;
@@ -38,7 +29,7 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             sessionStorage.webMappingConfigs = JSON.stringify(configs);
         }
     };
-    webMapping.version = "2.2.9";
+    webMapping.version = "2.4.1";
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             webmapping: webMapping
@@ -687,8 +678,12 @@ angular.module("farmbuild.webmapping").factory("webMappingSelectInteraction", fu
             selectInteraction.setActive(false);
             selectInteraction.getFeatures().on("change:length", function() {
                 var selections = selectInteraction.getFeatures();
-                if (selections.getLength() > 0) {
+                if (!selectConfig.multi && selections.getLength() > 0) {
                     $rootScope.$broadcast("web-mapping-feature-select", selectInteraction.getFeatures().item(0));
+                    return;
+                }
+                if (selectConfig.multi && selections.getLength() > 0) {
+                    $rootScope.$broadcast("web-mapping-feature-select", selectInteraction.getFeatures().getArray());
                     return;
                 }
                 $rootScope.$broadcast("web-mapping-feature-deselect");
@@ -796,11 +791,7 @@ angular.module("farmbuild.webmapping").factory("webMappingMeasurement", function
 "use strict";
 
 angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", function(validations, webMappingMeasureControl, webMappingSnapControl, webMappingGoogleAddressSearch, webMappingTransformation, webMappingConverter, $log) {
-    var _isDefined = validations.isDefined, _googleProjection = "EPSG:3857", _openlayersDefaultProjection = "EPSG:4326", _ZoomToExtentControl, _transform = webMappingTransformation, _converter = webMappingConverter;
-    function addControlsToGmap(gmap, targetElement) {
-        gmap.controls[google.maps.ControlPosition.TOP_LEFT].push(targetElement);
-        targetElement.parentNode.removeChild(targetElement);
-    }
+    var _isDefined = validations.isDefined, _googleProjection = "EPSG:3857", _ZoomToExtentControl, _transform = webMappingTransformation, _converter = webMappingConverter;
     function addControlsToOlMap(map, extent) {
         if (extent) {
             _ZoomToExtentControl = new ol.control.ZoomToExtent({
@@ -809,27 +800,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             map.addControl(_ZoomToExtentControl);
         }
         map.addControl(new ol.control.ScaleLine());
-    }
-    function _initWithGoogleMap(map, extent, gmap, targetElement) {
-        if (!_isDefined(gmap) || !_isDefined(map)) {
-            return;
-        }
-        $log.info("integrating google map ...");
-        var view = map.getView();
-        view.on("change:center", function() {
-            var center = ol.proj.transform(view.getCenter(), _googleProjection, _openlayersDefaultProjection);
-            gmap.setCenter(new google.maps.LatLng(center[1], center[0]));
-        });
-        view.on("change:resolution", function() {
-            gmap.setZoom(view.getZoom());
-        });
-        window.onresize = function() {
-            var center = _transform.toGoogleLatLng(view.getCenter(), _openlayersDefaultProjection);
-            google.maps.event.trigger(gmap, "resize");
-            gmap.setCenter(center);
-        };
-        _init(map, extent);
-        addControlsToGmap(gmap, targetElement);
     }
     function _init(map, extent) {
         var defaults = {
@@ -867,14 +837,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
         } catch (e) {
             $log.error(e);
         }
-    }
-    function _center(coordinates, map) {
-        if (!_isDefined(coordinates) || !_isDefined(map)) {
-            return;
-        }
-        $log.info("centring view ...");
-        map.getView().setCenter(coordinates);
-        map.getView().setZoom(15);
     }
     function _createPaddocksLayer(paddocksGeometry, dataProjection) {
         if (!_isDefined(paddocksGeometry) || !_isDefined(dataProjection)) {
@@ -931,72 +893,6 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
             layers: [ _createPaddocksLayer(geometry.paddocks, dataProjection, featureProjection), _createFarmLayer(geometry.farm, dataProjection, featureProjection) ]
         });
     }
-    function _createBaseLayers() {
-        var vicMapImageryLayer = new ol.layer.Tile({
-            title: "VicMAP Imagery",
-            type: "base",
-            visible: true,
-            source: new ol.source.TileWMS({
-                url: "http://api.maps.vic.gov.au/vicmapapi-mercator/map-wm/wms",
-                params: {
-                    LAYERS: "SATELLITE_WM",
-                    VERSION: "1.1.1"
-                }
-            })
-        }), vicMapStreetLayer = new ol.layer.Tile({
-            title: "VicMAP Street",
-            type: "base",
-            visible: false,
-            source: new ol.source.TileWMS({
-                url: "http://api.maps.vic.gov.au/vicmapapi-mercator/map-wm/wms",
-                params: {
-                    LAYERS: "WEB_MERCATOR",
-                    VERSION: "1.1.1"
-                }
-            })
-        });
-        return new ol.layer.Group({
-            title: "Base maps",
-            layers: [ vicMapImageryLayer, vicMapStreetLayer ]
-        });
-    }
-    function _createBaseLayersWithGoogleMaps() {
-        var vicMapImageryLayer = new ol.layer.Tile({
-            title: "VicMAP Imagery",
-            type: "base",
-            visible: false,
-            source: new ol.source.TileWMS({
-                url: "http://api.maps.vic.gov.au/vicmapapi-mercator/map-wm/wms",
-                params: {
-                    LAYERS: "SATELLITE_WM",
-                    VERSION: "1.1.1"
-                }
-            })
-        }), vicMapStreetLayer = new ol.layer.Tile({
-            title: "VicMAP Street",
-            type: "base",
-            visible: false,
-            source: new ol.source.TileWMS({
-                url: "http://api.maps.vic.gov.au/vicmapapi-mercator/map-wm/wms",
-                params: {
-                    LAYERS: "WEB_MERCATOR",
-                    VERSION: "1.1.1"
-                }
-            })
-        }), googleImageryLayer = new ol.layer.Tile({
-            title: "Google Imagery",
-            type: "base",
-            visible: true
-        }), googleStreetLayer = new ol.layer.Tile({
-            title: "Google Street",
-            type: "base",
-            visible: false
-        });
-        return new ol.layer.Group({
-            title: "Base maps",
-            layers: [ vicMapImageryLayer, vicMapStreetLayer, googleStreetLayer, googleImageryLayer ]
-        });
-    }
     function _reload(map, geoJsons, dataProjection) {
         var farmLayers = map.getLayers().item(1).getLayers(), farmSource = farmLayers.item(1).getSource(), paddocksSource = farmLayers.item(0).getSource(), farmFeatures = _converter.geoJsonToFeatures(geoJsons.farm, dataProjection, _googleProjection), paddockFeatures = _converter.geoJsonToFeatures(geoJsons.paddocks, dataProjection, _googleProjection);
         farmSource.clear();
@@ -1048,11 +944,7 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
     return {
         init: _init,
         exportGeometry: _exportGeometry,
-        center: _center,
-        initWithGoogleMap: _initWithGoogleMap,
         createFarmLayers: _createFarmLayers,
-        createBaseLayers: _createBaseLayers,
-        createBaseLayersWithGoogleMaps: _createBaseLayersWithGoogleMaps,
         farmLayer: _farmLayer,
         paddocksLayer: _paddocksLayer,
         farmLayerGroup: _farmLayerGroup,
@@ -1127,86 +1019,6 @@ angular.module("farmbuild.webmapping").factory("webMappingParcels", function($lo
     }
     return {
         load: _load
-    };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingPrint", function($log, $http, $q, farmdata, validations, farmdataConverter) {
-    var _isDefined = validations.isDefined, _isEmpty = validations.isEmpty, _baseLayers = [ {
-        name: "Google Imagery",
-        value: "GOOGLE_SATELLITE"
-    }, {
-        name: "Google Street",
-        value: "GOOGLE_STREET"
-    }, {
-        name: "VicMap Imagery",
-        value: "VICMAP_SATELLITE"
-    }, {
-        name: "VicMap Street",
-        value: "VICMAP_STREET"
-    } ];
-    function _validate(extent, baseMap, title, showPaddocksLabel, includePaddocksTable) {
-        var result = {
-            valid: true,
-            errors: []
-        };
-        if (_isEmpty(extent)) {
-            $log.error("Webmapping map print: Please pass a valid value for map extent to print the map!");
-            result.valid = false;
-            result.errors.push("Extent value is empty!");
-        }
-        if (_isEmpty(baseMap)) {
-            $log.error("Webmapping map print: Please pass a valid value for baseMap to print the map!");
-            result.valid = false;
-            result.errors.push("Base Map value is empty!");
-        }
-        if (_isEmpty(title)) {
-            $log.error("Webmapping map print: Please pass a valid value for title to print the map!");
-            result.valid = false;
-            result.errors.push("Title value is empty!");
-        }
-        if (_isEmpty(showPaddocksLabel)) {
-            $log.error("Webmapping map print: Please pass a valid value for showPaddocksLabel to print the map!");
-            result.valid = false;
-            result.errors.push("Show Paddocks Label must be true or false!");
-        }
-        if (_isEmpty(includePaddocksTable)) {
-            $log.error("Webmapping map print: Please pass a valid includePaddocksTable to print the map!");
-            result.valid = false;
-            result.errors.push("Include Paddocks Table must be true or false!");
-        }
-        return result;
-    }
-    function _print(farmData, extent, baseMap, title, showPaddocksLabel, includePaddocksTable) {
-        $log.info("Map print requested ...", farmData, extent, baseMap, title, showPaddocksLabel, includePaddocksTable);
-        var deferred = $q.defer(), validationResult = _validate(extent, baseMap, title, showPaddocksLabel, includePaddocksTable), webMappingConfigs = angular.fromJson(sessionStorage.webMappingConfigs), printUrl = webMappingConfigs.printUrl;
-        if (!validationResult.valid) {
-            deferred.reject(validationResult.errors);
-        }
-        if (!farmdata.validate(farmData)) {
-            deferred.reject("Invalid farm data!");
-        }
-        $log.info("printUrl", printUrl);
-        $http.post(printUrl, {
-            farmData: farmdataConverter.toGeoJson(farmData),
-            extent: extent,
-            baseMap: baseMap,
-            title: title,
-            showPaddocksLabel: showPaddocksLabel,
-            includePaddocksTable: includePaddocksTable
-        }, {
-            cache: false
-        }).then(function(response) {
-            deferred.resolve(response.data);
-        }, function(response) {
-            deferred.reject([ "Calling map service failed with this error: " + response.statusText + "(" + response.status + ")" ]);
-        });
-        return deferred.promise;
-    }
-    return {
-        print: _print,
-        baseLayers: _baseLayers
     };
 });
 
@@ -1454,23 +1266,6 @@ angular.module("farmbuild.webmapping").factory("webMappingGoogleAddressSearch", 
     }
     return {
         init: _init
-    };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingGoogleAnalytics", function($log, validations, googleAnalytics) {
-    var api = "farmbuild-webmapping", _isDefined = validations.isDefined;
-    function _trackWebMapping(clientName) {
-        if (!_isDefined(clientName)) {
-            $log.error("client name is not specified");
-            return;
-        }
-        $log.info("googleAnalyticsWebMapping.trackWebMapping clientName: %s", clientName);
-        googleAnalytics.track(api, clientName);
-    }
-    return {
-        trackWebMapping: _trackWebMapping
     };
 });
 

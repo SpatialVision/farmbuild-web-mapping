@@ -26,11 +26,7 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 	          webMappingInteractions,
 	          webMappingMeasurement,
 	          webMappingPaddocks,
-	          webMappingOpenLayersHelper,
-	          webMappingGoogleAddressSearch,
-	          webMappingGoogleAnalytics,
-	          webMappingPrint,
-	          webMappingParcels) {
+	          webMappingOpenLayersHelper) {
 		$log.info('Welcome to Web Mapping...');
 
 		var _isDefined = validations.isDefined,
@@ -41,45 +37,9 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 				farmdata: farmdata,
 				validator: geoJsonValidator,
 				toGeoJsons: farmdataConverter.toGeoJsons,
-
-				/**
-				 * converts farmData geometry to KML
-				 * @method toKml
-				 * @param {object} farmData - farmData to convert
-				 * @returns {string} KML string
-				 * @memberof webmapping
-				 */
-				toKml: farmdataConverter.toKml,
-
-				/**
-				 * converts farmData geometry to geoJSON
-				 * @method toGeoJson
-				 * @param {object} farmData - farmData to convert
-				 * @returns {object} geoJSON object
-				 * @memberof webmapping
-				 */
-				toGeoJson: farmdataConverter.toGeoJson,
-
-				/**
-				 * converts farmData geometry to geoJSON and exports the file
-				 * @method exportGeoJson
-				 * @param {object} farmData - farmData to convert
-				 * @memberof webmapping
-				 */
-				exportGeoJson: farmdataConverter.exportGeoJson,
-
-				/**
-				 * converts farmData geometry to KML and exports the file
-				 * @method exportKml
-				 * @param {object} farmData - farmData to convert
-				 * @memberof webmapping
-				 */
-				exportKml: farmdataConverter.exportKml,
 				actions: webMappingInteractions,
 				paddocks: webMappingPaddocks,
 				olHelper: webMappingOpenLayersHelper,
-				ga: webMappingGoogleAnalytics,
-				parcels: webMappingParcels,
 				measurement: webMappingMeasurement,
 
 				/**
@@ -111,16 +71,6 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 					return session.save(farmData, geoJsons);
 				},
 
-				/**
-				 * Saves and exports the farmData.json with a file name: farmdata-NAME_OF_FILE-yyyyMMddHHmmss.json
-				 * It creates HTML link element with 'download' attribute, the data is attached to href
-				 * and invoke click() function so the user gets the file save dialogue or something equivalent.
-				 * @method export
-				 * @param {object} document - browser document object reference
-				 * @param {object} farmData - farmData to export
-				 * @memberof webmapping
-				 */
-				export: session.export,
 				/**
 				 * Creates a new farmdata block as Javascript object with the specified name.
 				 * @method create
@@ -208,50 +158,6 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 				 * @memberof webmapping
 				 */
 				update: session.update,
-
-				/**
-				 * Make a request for map print .
-				 * @method print
-				 * @param {!Object} farmdata - farmdata which includes farm and paddocks information
-				 * @param {!ol.Extent} extent - extent of the map to be printed
-				 * @param {!baseMap} baseMap - base map identifier (ie: 'GOOGLE_SATELLITE', 'VICMAP_SATELLITE'). <br/> Use "webmapping.printer.baseLayers" for reference values!
-				 * @param {!String} title - report title
-				 * @param {!Boolean} showPaddocksLabel -  extent of the map to be printed
-				 * @param {!Boolean} includePaddocksTable - extent of the map to be printed
-				 * @param {Number} width - extent of the map to be printed
-				 * @param {Number} height - extent of the map to be printed
-				 * @param {Number} dpi - extent of the map to be printed
-				 * @returns {extent} extent of the map to be printed
-				 * @memberof webmapping
-				 */
-				print: webMappingPrint.print,
-				
-				/**
-				 * webmapping printer
-				 * @type {object}
-				 * @namespace webmapping.printer
-				 */
-				printer: webMappingPrint,
-				
-				/**
-				 * Make a request for map print .
-				 * @method print
-				 * @param {!Object} farmdata - farmdata which includes farm and paddocks information
-				 * @param {!ol.Extent} extent - extent of the map to be printed
-				 * @param {!baseMap} baseMap - base map identifier (ie: 'GOOGLE_SATELLITE', 'VICMAP_SATELLITE'). <br/> Use "webmapping.printer.baseLayers" for reference values!
-				 * @param {!String} title - report title
-				 * @param {!Boolean} showPaddocksLabel -  indicates whether to show paddock labels on the map
-				 * @param {!Boolean} includePaddocksTable - indicates whether to print paddocks information in a tabular format
-				 * @returns {extent} a url that you can download you printed map from
-				 * @memberof webmapping.printer
-				 */
-				
-				/**
-				 * Reference values for print base layers (ie: 'GOOGLE_SATELLITE', 'GOOGLE_STREET', 'VICMAP_SATELLITE', 'VICMAP_STREET)
-				 * @method baseLayers
-				 * @returns {object} Supported base layers for print
-				 * @memberof webmapping.printer
-				 */
 				
 				debug: function (configs) {
 					if(_isEmpty(configs)){
@@ -262,7 +168,7 @@ angular.module('farmbuild.webmapping', ['farmbuild.core', 'farmbuild.farmdata'])
 			};
 
 		// Provide a shortcut for modules
-		webMapping.version = '2.2.9';
+		webMapping.version = '2.4.1';
 
 		if (typeof window.farmbuild === 'undefined') {
 			window.farmbuild = {
