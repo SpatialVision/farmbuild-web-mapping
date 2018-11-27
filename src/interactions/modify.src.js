@@ -4,7 +4,6 @@ angular.module('farmbuild.webmapping')
 	.factory('webMappingModifyInteraction',
 	function (validations,
 	          $log) {
-		var _isDefined = validations.isDefined;
 
 		function _create(map, select) {
 			var modifyInteraction = new ol.interaction.Modify({
@@ -31,7 +30,7 @@ angular.module('farmbuild.webmapping')
 				disable: _disable,
 				interaction: modifyInteraction
 			}
-		};
+		}
 
 		return {
 			create: _create

@@ -15,31 +15,8 @@
 angular.module('farmbuild.webmapping')
 	.factory('webMappingPaddocks',
 	function ($log, validations, farmdata) {
-		var _isDefined = validations.isDefined;
-
-		/**
-		 * finds a paddock based on the coordinate
-		 * @method findByCoordinate
-		 * @param {!ol.Coordinate} coordinate openlayers map object
-		 * @param {!ol.layer.Vector} vectorLayer - paddock layer
-		 * @returns {ol.Feature} the first paddock found in that coordinate
-		 * @memberof webmapping.paddocks
-		 */
-		function _findByCoordinate(coordinate, vectorLayer) {
-			var found;
-			if (!_isDefined(coordinate) || !_isDefined(vectorLayer)) {
-				return;
-			}
-			var paddocks = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate);
-			if (paddocks && paddocks.length > 0) {
-				found = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate)[0];
-			}
-			$log.info('looking up for a paddock at ', coordinate, found);
-			return found;
-		}
 
 		return {
-			findByCoordinate: _findByCoordinate,
 			/**
 			 * Find paddock by name
 			 * @method findByName
@@ -162,16 +139,6 @@ angular.module('farmbuild.webmapping')
 			 * @public
 			 * @static
 			 */
-			/**
-			 * Loads the groups into PaddockGroups
-			 * @method load
-			 * @param PaddockGroups
-			 * @returns {object} PaddockGroups collection
-			 * @memberof webmapping.paddocks/groups
-			 * @public
-			 * @static
-			 */
-			groups: farmdata.paddockGroups
 		};
 
 	});

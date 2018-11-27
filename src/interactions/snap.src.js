@@ -15,7 +15,7 @@ angular.module('farmbuild.webmapping')
 
 			var snapInteraction = new ol.interaction.Snap({
 				source: paddocksSource
-			}), snapVisibleLayer;
+			});
 
 			snapInteraction.addFeature(farmSource.getFeatures()[0]);
 
@@ -49,7 +49,7 @@ angular.module('farmbuild.webmapping')
 				destroy: _destroy
 			};
 
-		};
+		}
 
 		return {
 			create: _create

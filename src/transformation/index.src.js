@@ -2,8 +2,7 @@
 
 angular.module('farmbuild.webmapping')
     .factory('webMappingTransformation',
-    function (validations,
-              $log) {
+    function (validations) {
         var _isDefined = validations.isDefined,
             _openLayersDefaultProjection = 'EPSG:4326',
             _googleProjection = 'EPSG:3857';

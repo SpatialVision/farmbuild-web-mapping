@@ -546,7 +546,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
 "use strict";
 
 angular.module("farmbuild.webmapping").factory("webMappingModifyInteraction", function(validations, $log) {
-    var _isDefined = validations.isDefined;
     function _create(map, select) {
         var modifyInteraction = new ol.interaction.Modify({
             features: select.interaction.getFeatures()
@@ -651,7 +650,7 @@ angular.module("farmbuild.webmapping").factory("webMappingSnapInteraction", func
         }
         var snapInteraction = new ol.interaction.Snap({
             source: paddocksSource
-        }), snapVisibleLayer;
+        });
         snapInteraction.addFeature(farmSource.getFeatures()[0]);
         function _enable() {
             snapInteraction.setActive(true);
@@ -687,7 +686,7 @@ angular.module("farmbuild.webmapping").factory("webMappingSnapInteraction", func
 "use strict";
 
 angular.module("farmbuild.webmapping").factory("webMappingMeasurement", function(validations, webMappingConverter, $log) {
-    var _isDefined = validations.isDefined, _googleProjection = "EPSG:3857", _openlayersDefaultProjection = "EPSG:4326", _converter = webMappingConverter;
+    var _googleProjection = "EPSG:3857", _openlayersDefaultProjection = "EPSG:4326", _converter = webMappingConverter;
     function _areas(features) {
         $log.info("calculating area of features ...", features);
         try {
@@ -705,19 +704,9 @@ angular.module("farmbuild.webmapping").factory("webMappingMeasurement", function
             $log.error(e);
         }
     }
-    function _length(feature) {
-        $log.info("calculating length of line ...", feature);
-        feature = _converter.featureToGeoJson(feature, _openlayersDefaultProjection, _googleProjection);
-        try {
-            return turf.lineDistance(feature, "kilometers") * 1e3;
-        } catch (e) {
-            $log.error(e);
-        }
-    }
     return {
         area: _area,
-        areas: _areas,
-        length: _length
+        areas: _areas
     };
 });
 
@@ -890,68 +879,11 @@ angular.module("farmbuild.webmapping").factory("webMappingOpenLayersHelper", fun
 "use strict";
 
 angular.module("farmbuild.webmapping").factory("webMappingPaddocks", function($log, validations, farmdata) {
-    var _isDefined = validations.isDefined;
-    function _findByCoordinate(coordinate, vectorLayer) {
-        var found;
-        if (!_isDefined(coordinate) || !_isDefined(vectorLayer)) {
-            return;
-        }
-        var paddocks = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate);
-        if (paddocks && paddocks.length > 0) {
-            found = vectorLayer.getSource().getFeaturesAtCoordinate(coordinate)[0];
-        }
-        $log.info("looking up for a paddock at ", coordinate, found);
-        return found;
-    }
     return {
-        findByCoordinate: _findByCoordinate,
         findByName: farmdata.paddocks.byName,
         findById: farmdata.paddocks.byId,
         toGeoJSON: farmdata.paddocks.toGeoJSON,
-        types: farmdata.paddockTypes,
-        groups: farmdata.paddockGroups
-    };
-});
-
-"use strict";
-
-angular.module("farmbuild.webmapping").factory("webMappingParcels", function($log, $http, validations, webMappingInteractions, webMappingConverter) {
-    var _isDefined = validations.isDefined, converter = webMappingConverter;
-    function _load(serviceUrl, extent, extentDataProjection, responseProjection) {
-        var config = {
-            params: {
-                service: "WFS",
-                version: "1.0.0",
-                request: "GetFeature",
-                typeName: "farmbuild:ruralparcels",
-                outputFormat: "text/javascript",
-                format_options: "callback:JSON_CALLBACK",
-                srsname: responseProjection,
-                bbox: extent.join(",") + "," + extentDataProjection
-            }
-        };
-        if (!_isDefined(serviceUrl) || !_isDefined(extent) || !_isDefined(extentDataProjection) || !_isDefined(responseProjection)) {
-            $log.error("There is a problem with input parameters, please refer to api for more information");
-            return;
-        }
-        $log.info("Loading parcels information for the extent: ", extent);
-        return $http({
-            method: "JSONP",
-            url: serviceUrl,
-            params: config.params
-        }).success(function(data, status) {
-            $log.info("loaded parcels successfully.", status, data);
-            var olFeatures = converter.geoJsonToFeatures({
-                type: "FeatureCollection",
-                features: data.features
-            });
-            webMappingInteractions.parcels.snap(olFeatures);
-        }).error(function(data, status) {
-            $log.error("loading parcels failed!!", status, data);
-        });
-    }
-    return {
-        load: _load
+        types: farmdata.paddockTypes
     };
 });
 
@@ -1019,7 +951,7 @@ angular.module("farmbuild.webmapping").factory("webMappingSession", function($lo
 
 "use strict";
 
-angular.module("farmbuild.webmapping").factory("webMappingTransformation", function(validations, $log) {
+angular.module("farmbuild.webmapping").factory("webMappingTransformation", function(validations) {
     var _isDefined = validations.isDefined, _openLayersDefaultProjection = "EPSG:4326", _googleProjection = "EPSG:3857";
     function _transformToGoogleLatLng(latLng, destinationProjection) {
         if (!_isDefined(latLng) || !_isDefined(destinationProjection)) {

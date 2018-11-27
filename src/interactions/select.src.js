@@ -76,7 +76,7 @@ angular.module('farmbuild.webmapping')
 				interaction: selectInteraction
 			}
 
-		};
+		}
 
 		return {
 			create: _create
