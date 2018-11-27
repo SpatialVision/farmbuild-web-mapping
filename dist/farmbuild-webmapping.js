@@ -1011,5 +1011,3 @@ angular.module("farmbuild.webmapping").factory("webMappingGoogleAddressSearch", 
 "use strict";
 
 angular.module("farmbuild.webmapping").run(function(webmapping) {});
-
-angular.injector([ "ng", "farmbuild.webmapping" ]);
