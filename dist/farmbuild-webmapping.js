@@ -21,7 +21,7 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
             return $rootScope.$on(name, listener);
         }
     };
-    webMapping.version = "2.4.1";
+    webMapping.version = "2.4.2";
     if (typeof window.farmbuild === "undefined") {
         window.farmbuild = {
             webmapping: webMapping

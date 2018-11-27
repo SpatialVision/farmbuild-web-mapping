@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>measurement - Documentation</title>
+    <title>paddocks - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">measurement</h1>
+    <h1 class="page-title">paddocks</h1>
     
 
     
@@ -43,7 +43,7 @@
         <h2>
             <span class="ancestors"><a href="webmapping.html">webmapping</a>.</span>
         
-        measurement
+        paddocks
         </h2>
         
     
@@ -53,7 +53,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>webmapping measurement</p></div>
+            <div class="description"><p>webmapping paddock</p></div>
         
 
         
@@ -88,7 +88,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="measurement_index.src.js.html">measurement/index.src.js</a>, <a href="measurement_index.src.js.html#line3">line 3</a>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -124,14 +124,14 @@
 
     
 
-    <h4 class="name" id=".area"><span class="type-signature">(static) </span>area<span class="signature">(feature<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    <h4 class="name" id=".findById"><span class="type-signature">(static) </span>findById<span class="signature">(id<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Calculates are of a feature</p>
+    <p>Find paddock by id</p>
 </div>
 
 
@@ -167,13 +167,13 @@
 
         <tr>
             
-                <td class="name"><code>feature</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">ol.Feature</span>
+<span class="param-type">string</span>
 
 
             
@@ -183,7 +183,30 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>id of the paddock to search for</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paddocks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>paddocks array to search on</p></td>
         </tr>
 
     
@@ -224,7 +247,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="measurement_index.src.js.html">measurement/index.src.js</a>, <a href="measurement_index.src.js.html#line27">line 27</a>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -251,7 +274,7 @@
 
         
 <div class="param-desc">
-    <p>area in hectare</p>
+    <p>paddock Object</p>
 </div>
 
 
@@ -262,7 +285,336 @@
     </dt>
     <dd>
         
-<span class="param-type">number</span>
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".findByName"><span class="type-signature">(static) </span>findByName<span class="signature">(name<span class="signature-attributes">non-null</span>, paddocks<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; (non-null) {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Find paddock by name</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>name of the paddock to search for</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paddocks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>paddocks array to search on</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line20">line 20</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>paddock Object</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".toGeoJSON"><span class="type-signature">(static) </span>toGeoJSON<span class="signature">(paddock<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Returns GeoJSON for a given paddock</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>paddock</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>paddock object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="paddocks_index.src.js.html">paddocks/index.src.js</a>, <a href="paddocks_index.src.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Paddock Feature Object</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
 
 
     </dd>
@@ -290,7 +642,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Nov 27 2018 14:46:03 GMT+1100 (AEDT) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Nov 27 2018 14:51:09 GMT+1100 (AEDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
