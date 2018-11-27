@@ -1,11 +1,10 @@
 "use strict";
 
-angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("webmapping", function(farmdata, validations, $log, $rootScope, geoJsonValidator, farmdataConverter, webMappingSession, webMappingProjections, webMappingInteractions, webMappingMeasurement, webMappingPaddocks, webMappingOpenLayersHelper) {
+angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" ]).factory("webmapping", function(farmdata, $log, $rootScope, farmdataConverter, webMappingSession, webMappingProjections, webMappingInteractions, webMappingMeasurement, webMappingPaddocks, webMappingOpenLayersHelper) {
     $log.info("Welcome to Web Mapping...");
-    var _isDefined = validations.isDefined, _isEmpty = validations.isEmpty, session = webMappingSession, webMapping = {
+    var session = webMappingSession, webMapping = {
         session: session,
         farmdata: farmdata,
-        validator: geoJsonValidator,
         toGeoJsons: farmdataConverter.toGeoJsons,
         actions: webMappingInteractions,
         paddocks: webMappingPaddocks,
@@ -20,13 +19,6 @@ angular.module("farmbuild.webmapping", [ "farmbuild.core", "farmbuild.farmdata" 
         create: farmdata.create,
         on: function(name, listener) {
             return $rootScope.$on(name, listener);
-        },
-        update: session.update,
-        debug: function(configs) {
-            if (_isEmpty(configs)) {
-                return;
-            }
-            sessionStorage.webMappingConfigs = JSON.stringify(configs);
         }
     };
     webMapping.version = "2.4.1";
@@ -159,7 +151,7 @@ angular.module("farmbuild.webmapping").factory("webMappingGeoProcessing", functi
 "use strict";
 
 angular.module("farmbuild.webmapping").factory("webMappingDrawInteraction", function(validations, $log, $rootScope) {
-    var _isDefined = validations.isDefined, _mode;
+    var _mode;
     function _create(map) {
         var drawInteraction = new ol.interaction.Draw({
             source: new ol.source.Vector(),
@@ -356,9 +348,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         if (_activeLayerName === "paddocks" && (_mode === "draw" || _mode === "edit")) {
             return _clipPaddocks(featureToClip, paddockSource, farmSource);
         }
-        if (_activeLayerName === "paddocks" && _mode === "donut-draw") {
-            return _clipDonut(featureToClip);
-        }
         if (_activeLayerName === "farm") {
             return _clipFarm(featureToClip, farmSource);
         }
@@ -395,18 +384,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         return _addFeature(_activeLayer, clipped, properties);
     }
-    function _clipDonut(donutFeature) {
-        var properties, paddockFeature = _donutContainer, clipped = _transform.erase(paddockFeature, donutFeature);
-        if (!_isDefined(paddockFeature)) {
-            $log.error("donut must be inside a paddock");
-            return;
-        }
-        properties = paddockFeature.getProperties();
-        if (_isDefined(clipped)) {
-            _activeLayer.getSource().removeFeature(paddockFeature);
-            return _addFeature(_activeLayer, clipped, properties);
-        }
-    }
     function _clipFarm(featureToClip, farmSource) {
         var clipped = featureToClip, properties, result;
         if (farmSource.getFeatures()[0]) {
@@ -421,12 +398,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         result = _addFeature(_activeLayer, clipped, properties);
         _clearSelections();
         return result;
-    }
-    function _merge(features) {
-        $log.info("merging features ...", features);
-        _remove(features, false);
-        _addFeature(_activeLayer, _transform.merge(features));
-        _clearSelections();
     }
     function _selectedFeatures() {
         if (!_isDefined(_select) || !_isDefined(_select.interaction)) {
@@ -473,24 +444,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         _select.enable();
         _draw.disable();
     }
-    function _enableDonutDrawing() {
-        if (!_isDefined(_mode) || _mode === "donut-draw") {
-            return;
-        }
-        $log.info("donut drawing enabled");
-        _donutContainer = _selectedFeatures().item(0);
-        _mode = "donut-draw";
-        _select.disable();
-        _modify.disable();
-        _draw.enable(_mode);
-    }
-    function _snapParcels(parcels) {
-        if (!_isDefined(parcels) || !_isDefined(_snap)) {
-            $log.error("Snap interaction is undefined, select a layer to start!");
-            return;
-        }
-        _snap.addFeatures(parcels);
-    }
     function _clearSelections() {
         _select.interaction.getFeatures().clear();
     }
@@ -512,12 +465,6 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         }
         _draw.discard();
         _selectedFeatures().clear();
-    }
-    function _isEditing() {
-        if (!_isDefined(_mode)) {
-            return;
-        }
-        return _select.interaction.getFeatures().getLength() > 0;
     }
     function _disableSnapping() {
         if (!_isDefined(_snap)) {
@@ -577,18 +524,13 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
         destroy: _destroy,
         editing: {
             enable: _enableEditing,
-            disable: _disableEditing,
-            isEditing: _isEditing
+            disable: _disableEditing
         },
         drawing: {
             discard: _discardDrawing,
             finish: _finishDrawing,
             enable: _enableDrawing,
-            disable: _disableDrawing,
-            isDrawing: _isDrawing
-        },
-        donut: {
-            enable: _enableDonutDrawing
+            disable: _disableDrawing
         },
         snapping: {
             enable: _enableSnapping,
@@ -596,16 +538,7 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
             active: _isSnappingActive
         },
         features: {
-            selections: _selectedFeatures,
-            clip: _clip,
-            merge: _merge,
-            remove: _remove
-        },
-        parcels: {
-            snap: _snapParcels
-        },
-        keyboardShortcuts: {
-            enable: _enableKeyboardShortcuts
+            selections: _selectedFeatures
         }
     };
 });
@@ -1077,13 +1010,8 @@ angular.module("farmbuild.webmapping").factory("webMappingSession", function($lo
         return farmdata.merge(farmData, geoJsons);
     }
     webMappingSession.save = save;
-    webMappingSession.clear = farmdata.session.clear;
-    webMappingSession.isLoadFlagSet = farmdata.session.isLoadFlagSet;
     webMappingSession.find = function() {
         return farmdata.session.find();
-    };
-    webMappingSession.export = function(document, farmData, geoJsons) {
-        return farmdata.session.export(document, save(farmData, geoJsons));
     };
     webMappingSession.update = farmdata.update;
     return webMappingSession;

@@ -67,17 +67,9 @@ angular.module('farmbuild.webmapping')
 
 		webMappingSession.save = save;
 
-		webMappingSession.clear = farmdata.session.clear;
-
-		webMappingSession.isLoadFlagSet = farmdata.session.isLoadFlagSet;
-
 		webMappingSession.find = function () {
 			return farmdata.session.find();
-		}
-
-		webMappingSession.export = function (document, farmData, geoJsons) {
-			return farmdata.session.export(document, save(farmData, geoJsons));
-		}
+		};
 
 		webMappingSession.update = farmdata.update;
 

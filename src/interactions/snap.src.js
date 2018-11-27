@@ -27,26 +27,6 @@ angular.module('farmbuild.webmapping')
 				snapInteraction.setActive(false);
 			}
 
-			// snapVisibleLayer = new ol.layer.Vector({
-			// 	source: (new ol.source.Vector()),
-			// 	title: 'Rural Parcels',
-			// 	style: new ol.style.Style({
-			// 		stroke: new ol.style.Stroke({
-			// 			color: 'rgba(238,238,238,.7)',
-			// 			width: 1
-			// 		})
-			// 	})
-			// });
-
-			// map.addLayer(snapVisibleLayer);
-
-			// function _addFeatures(parcels) {
-			// 	parcels.forEach(function (parcel) {
-			// 		snapInteraction.addFeature(parcel);
-			// 	});
-			// 	snapVisibleLayer.getSource().addFeatures(parcels);
-			// }
-
 			function _init(active) {
 				$log.info('snap interaction init ...');
 				map.addInteraction(snapInteraction);
@@ -58,7 +38,6 @@ angular.module('farmbuild.webmapping')
 					$log.error('There is a problem with input parameters, map object is not defined');
 					return;
 				}
-				// map.removeLayer(snapVisibleLayer);
 				map.removeInteraction(snapInteraction)
 			}
 
@@ -66,7 +45,6 @@ angular.module('farmbuild.webmapping')
 				init: _init,
 				enable: _enable,
 				disable: _disable,
-				// addFeatures: _addFeatures,
 				interaction: snapInteraction,
 				destroy: _destroy
 			};

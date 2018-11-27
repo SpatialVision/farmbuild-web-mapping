@@ -219,10 +219,6 @@ angular.module('farmbuild.webmapping')
 				return _clipPaddocks(featureToClip, paddockSource, farmSource);
 			}
 
-			if (_activeLayerName === 'paddocks' && _mode === 'donut-draw') {
-				return _clipDonut(featureToClip);
-			}
-
 			if (_activeLayerName === 'farm') {
 				return _clipFarm(featureToClip, farmSource)
 
@@ -265,21 +261,6 @@ angular.module('farmbuild.webmapping')
 			return _addFeature(_activeLayer, clipped, properties);
 		};
 
-		function _clipDonut(donutFeature) {
-			var properties,
-				paddockFeature = _donutContainer,
-				clipped = _transform.erase(paddockFeature, donutFeature);
-			if (!_isDefined(paddockFeature)) {
-				$log.error('donut must be inside a paddock');
-				return;
-			}
-			properties = paddockFeature.getProperties();
-			if (_isDefined(clipped)) {
-				_activeLayer.getSource().removeFeature(paddockFeature);
-				return _addFeature(_activeLayer, clipped, properties);
-			}
-		};
-
 		function _clipFarm(featureToClip, farmSource) {
 			var clipped = featureToClip,
 				properties, result;
@@ -295,13 +276,6 @@ angular.module('farmbuild.webmapping')
 			result = _addFeature(_activeLayer, clipped, properties);
 			_clearSelections();
 			return result;
-		};
-
-		function _merge(features) {
-			$log.info('merging features ...', features);
-			_remove(features, false);
-			_addFeature(_activeLayer, _transform.merge(features));
-			_clearSelections();
 		};
 
 		/**
@@ -360,26 +334,6 @@ angular.module('farmbuild.webmapping')
 			_draw.disable();
 		};
 
-		function _enableDonutDrawing() {
-			if (!_isDefined(_mode) || _mode === 'donut-draw') {
-				return;
-			}
-			$log.info('donut drawing enabled');
-			_donutContainer = _selectedFeatures().item(0);
-			_mode = 'donut-draw';
-			_select.disable();
-			_modify.disable();
-			_draw.enable(_mode);
-		};
-
-		function _snapParcels(parcels) {
-			if (!_isDefined(parcels) || !_isDefined(_snap)) {
-				$log.error('Snap interaction is undefined, select a layer to start!');
-				return;
-			}
-			_snap.addFeatures(parcels);
-		};
-
 		function _clearSelections() {
 			_select.interaction.getFeatures().clear();
 		};
@@ -404,13 +358,6 @@ angular.module('farmbuild.webmapping')
 			}
 			_draw.discard();
 			_selectedFeatures().clear();
-		};
-
-		function _isEditing() {
-			if (!_isDefined(_mode)) {
-				return;
-			}
-			return _select.interaction.getFeatures().getLength() > 0;
 		};
 
 		function _disableSnapping() {
@@ -499,14 +446,7 @@ angular.module('farmbuild.webmapping')
 				 * @memberof webmapping.actions.editing
 				 * @method enable
 				 */
-				disable: _disableEditing,
-				/**
-				 * Whether editng is in progress
-				 * @memberof webmapping.actions.editing
-				 * @method isEditing
-				 * @returns {boolean} is editing is in progress
-				 */
-				isEditing: _isEditing
+				disable: _disableEditing
 			},
 			/**
 			 * Drawing namespace of webmapping.actions
@@ -538,28 +478,7 @@ angular.module('farmbuild.webmapping')
 				 * @memberof webmapping.actions.drawing
 				 * @method disable
 				 */
-				disable: _disableDrawing,
-				/**
-				 * Whether drawing is in progress
-				 * @memberof webmapping.actions.drawing
-				 * @method isDrawing
-				 * @returns {boolean} is drawing is in progress
-				 */
-				isDrawing: _isDrawing
-			},
-			/**
-			 * Donut Drawing namespace of webmapping.actions
-			 * @memberof webmapping.actions
-			 * @type {object}
-			 * @namespace webmapping.actions.donut
-			 */
-			donut: {
-				/**
-				 * Enables webmapping donut draw mode
-				 * @memberof webmapping.actions.donut
-				 * @method enable
-				 */
-				enable: _enableDonutDrawing
+				disable: _disableDrawing
 			},
 			/**
 			 * Snapping namespace of webmapping.actions
@@ -595,16 +514,7 @@ angular.module('farmbuild.webmapping')
 			 * @namespace webmapping.actions.features
 			 */
 			features: {
-				selections: _selectedFeatures,
-				clip: _clip,
-				merge: _merge,
-				remove: _remove
-			},
-			parcels: {
-				snap: _snapParcels
-			},
-			keyboardShortcuts: {
-				enable: _enableKeyboardShortcuts
+				selections: _selectedFeatures
 			}
 		}
 	});

@@ -12,7 +12,7 @@ angular.module('farmbuild.webmapping')
 	.factory('webMappingDrawInteraction',
 	function (validations,
 	          $log, $rootScope) {
-		var _isDefined = validations.isDefined, _mode;
+		var _mode;
 
 		function _create(map) {
 			var drawInteraction = new ol.interaction.Draw({
