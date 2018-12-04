@@ -514,7 +514,8 @@ angular.module('farmbuild.webmapping')
 			 * @namespace webmapping.actions.features
 			 */
 			features: {
-				selections: _selectedFeatures
+				selections: _selectedFeatures,
+                remove: _remove
 			}
 		}
 	});

@@ -538,7 +538,8 @@ angular.module("farmbuild.webmapping").factory("webMappingInteractions", functio
             active: _isSnappingActive
         },
         features: {
-            selections: _selectedFeatures
+            selections: _selectedFeatures,
+            remove: _remove
         }
     };
 });
